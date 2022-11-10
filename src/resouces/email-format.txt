@@ -1,0 +1,6 @@
+[Secure Chat Service]
+
+Welcome, [user-name]
+Room [room-name] invites you
+Your verified code is [code]
+Expired at [expired-time] (KST/Seoul)
