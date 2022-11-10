@@ -20,6 +20,13 @@ namespace chat::dao {
 
 class CompanyRepository : public BaseRepository {
 public:
+  static std::shared_ptr<CompanyRepository> getInstance(L repoLogger) {
+    if (instance == nullptr) {
+      instance = std::make_shared<CompanyRepository>(repoLogger);
+    }
+    return instance;
+  }
+
   CompanyRepository(L repoLogger) : BaseRepository(repoLogger){};
 
   R findByName(mysqlx::Session &session, std::string name) {
@@ -81,6 +88,7 @@ public:
   }
 
 private:
+  static std::shared_ptr<CompanyRepository> instance;
   CompanyRepository() = delete;
 
   R findBy(mysqlx::Session &session, std::string condition) {
@@ -93,6 +101,7 @@ private:
       auto stmt = session.sql(query);
       auto result = stmt.execute();
 
+      // SELECT로 선택된 ROW가 없다면 Data는 있되, NULL ROW가 담긴다.
       auto row = result.fetchOne();
       if (row.isNull() != true) {
         auto entity = R(new Company(
@@ -109,4 +118,6 @@ private:
     }
   }
 };
+
+std::shared_ptr<CompanyRepository> CompanyRepository::instance = nullptr;
 } // namespace chat::dao

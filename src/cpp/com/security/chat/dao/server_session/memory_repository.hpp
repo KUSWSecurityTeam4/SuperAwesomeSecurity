@@ -25,6 +25,13 @@ public:
   using K = uint64_t;
   using V = std::shared_ptr<ServerSession>;
 
+  static std::shared_ptr<ServerSessionRepository> getInstance(L repoLogger) {
+    if (instance == nullptr) {
+      instance = std::make_shared<ServerSessionRepository>(repoLogger);
+    }
+    return instance;
+  }
+
   ServerSessionRepository(L repoLogger) : BaseRepository(repoLogger), db{} {};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
@@ -104,7 +111,12 @@ public:
   }
 
 private:
+  static std::shared_ptr<ServerSessionRepository> instance;
+
   std::unordered_map<K, V> db;
   ServerSessionRepository() = delete;
 };
+
+std::shared_ptr<ServerSessionRepository> ServerSessionRepository::instance =
+    nullptr;
 } // namespace chat::dao
