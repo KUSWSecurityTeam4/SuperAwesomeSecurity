@@ -20,6 +20,13 @@ namespace chat::dao {
 
 class PasswordRepository : public BaseRepository {
 public:
+  static std::shared_ptr<PasswordRepository> getInstance(L repoLogger) {
+    if (instance == nullptr) {
+      instance = std::make_shared<PasswordRepository>(repoLogger);
+    }
+    return instance;
+  }
+
   PasswordRepository(L repoLogger) : BaseRepository(repoLogger){};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
@@ -186,6 +193,9 @@ public:
   }
 
 private:
+  static std::shared_ptr<PasswordRepository> instance;
   PasswordRepository() = delete;
 };
+
+std::shared_ptr<PasswordRepository> PasswordRepository::instance = nullptr;
 } // namespace chat::dao
