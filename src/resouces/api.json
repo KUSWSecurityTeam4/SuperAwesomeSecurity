@@ -1,0 +1,1718 @@
+{
+	"info": {
+		"_postman_id": "555fe6d8-34a9-44f8-b19e-fbb22bd94a8e",
+		"name": "company",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24261863"
+	},
+	"item": [
+		{
+			"name": "/company/id 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/company/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"company",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/company/id 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"10716396149328081046\",\n    \"session-token\" : \"2Lyo9OTWqxeGXbplOPFRfIAsxvLO3QNoYmLqPuwQysmCcp0VRV7uxr5xtai49A2fMmfcBzLk1iflt99wy7Y6Ro1dAbzjGug5uZcIObSGbF1si2XqlTWcrlnsxOHSlOZMjvnIFqSpZLbYOLwKPNPecitaMUAfhvI9084P3sEguMM1PyI9vz0vsApV6GIbPoF85VluiOB9xJ6781A31m79RPwKvrnPAlNQQTcZfF29FvoD9xlC41eceOttjBRL5PMo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/company/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"company",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "113"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"company\": {\n            \"id\": 1,\n            \"name\": \"testCompany\"\n        }\n    },\n    \"message\": \"CompanyController[GET](/company/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/company/id 테스트",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"name\" : \"name\",\n    \"password\" : \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/company/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"company",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/company/id 테스트",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"10716396149328081046\",\n    \"session-token\" : \"2Lyo9OTWqxeGXbplOPFRfIAsxvLO3QNoYmLqPuwQysmCcp0VRV7uxr5xtai49A2fMmfcBzLk1iflt99wy7Y6Ro1dAbzjGug5uZcIObSGbF1si2XqlTWcrlnsxOHSlOZMjvnIFqSpZLbYOLwKPNPecitaMUAfhvI9084P3sEguMM1PyI9vz0vsApV6GIbPoF85VluiOB9xJ6781A31m79RPwKvrnPAlNQQTcZfF29FvoD9xlC41eceOttjBRL5PMo\",\n    \"name\" : \"testCompany\",\n    \"password\" : \"1123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/company/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"company",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "115"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"company\": {\n            \"id\": 1,\n            \"name\": \"testCompany\"\n        }\n    },\n    \"message\": \"CompanyController[PATCH](/company/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/auth/login?type=company 테스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"name\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/auth/login?type=company",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "company"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/auth/login?type=company 테스트",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"company\",\n    \"password\": \"1123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/auth/login?type=company",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "company"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "441"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"array\": [\n            {\n                \"company\": {\n                    \"id\": 1,\n                    \"name\": \"company\"\n                }\n            },\n            {\n                \"session\": {\n                    \"id\": 11442710240445645052,\n                    \"token\": \"GU12vwRsZ4CNuziSM2GqMWWd2QGmkm4VXNL9HpQVEWxo8T0Hatnj4AGDirIE7VSQtkZUC8gTDe3E6L7eQCpzROV5TWskm6nUwbxO50MEZsn8VOhKOjwdwxSImlQZiZF7jj8OXXmCtp768cGPbG3gDy1DxVFtGs16r6Muqf7kPd4hOML5j1QX02GJ9KkuALNTICydB8kLNUgYAgfJlFjsKj8gXuVeO1sDRzXbIfw4wGr3F80ebWJKUTZXsg1dKMPV\"\n                }\n            }\n        ]\n    },\n    \"message\": \"AuthController[LOGIN](/auth/login?type=company) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/auth/login?type=user 테스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"email\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/auth/login?type=user",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "user"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/auth/login?type=user 테스트",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"colabofyyr@gmail.com\",\n    \"password\": \"1123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/auth/login?type=user",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "user"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "490"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"array\": [\n            {\n                \"user\": {\n                    \"companyId\": 1,\n                    \"email\": \"colabofyyr@gmail.com\",\n                    \"id\": 1,\n                    \"name\": \"teddy\",\n                    \"role\": \"boss\"\n                }\n            },\n            {\n                \"session\": {\n                    \"id\": 779833876405741172,\n                    \"token\": \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n                }\n            }\n        ]\n    },\n    \"message\": \"AuthController[LOGIN](/auth/login?type=user) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/auth/logout 테스트",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"type\" : \"[company | user]\",\n    \"id\" : \"current login id(session에 저장된 이용자의 아이디)\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/auth/logout",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/auth/logout 테스트",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"10716396149328081046\",\n    \"session-token\" : \"2Lyo9OTWqxeGXbplOPFRfIAsxvLO3QNoYmLqPuwQysmCcp0VRV7uxr5xtai49A2fMmfcBzLk1iflt99wy7Y6Ro1dAbzjGug5uZcIObSGbF1si2XqlTWcrlnsxOHSlOZMjvnIFqSpZLbYOLwKPNPecitaMUAfhvI9084P3sEguMM1PyI9vz0vsApV6GIbPoF85VluiOB9xJ6781A31m79RPwKvrnPAlNQQTcZfF29FvoD9xlC41eceOttjBRL5PMo\",\n    \"type\" : \"company\",\n    \"id\" : \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/auth/logout",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "129"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"message\": \"AuthController[LOGOUT](/auth/logout) : ok\"\n    },\n    \"message\": \"AuthController[LOGOUT](/auth/logout) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/invitations?type=request 테스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"user-id\" : \"초대할 유저 id\",\n    \"room-id\" : \"초대방 id\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/invitations?type=request",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"invitations"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "request"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/invitations?type=request 테스트",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\",\n    \"user-id\" : \"2\",\n    \"room-id\" : \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/invitations?type=request",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"invitations"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "request"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "164"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"invitation\": {\n            \"expiredAt\": \"2022-11-10 01:07:23\",\n            \"id\": 1,\n            \"roomId\": 1,\n            \"userId\": 2\n        }\n    },\n    \"message\": \"InvitationController(/invitations?type=request) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/invitations?type=register 테스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"user-id\" : \"내 id\",\n    \"room-id\" : \"초대방 id\",\n    \"password\" : \"이메일로 온 비밀번호\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/invitations?type=register",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"invitations"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "register"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/participants?room=id 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/participants?room=1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"participants"
+					],
+					"query": [
+						{
+							"key": "room",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/participants?room=id 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/participants?room=1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"participants"
+							],
+							"query": [
+								{
+									"key": "room",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "158"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"array\": [\n            {\n                \"participant\": {\n                    \"id\": 1,\n                    \"role\": \"host\",\n                    \"roomId\": 1,\n                    \"userId\": 1\n                }\n            }\n        ]\n    },\n    \"message\": \"ParticipantController[GET](/participants?room=1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/participants/id 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/participants/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"participants",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/participants/id 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/participants/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"participants",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "141"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"participant\": {\n            \"id\": 1,\n            \"role\": \"host\",\n            \"roomId\": 1,\n            \"userId\": 1\n        }\n    },\n    \"message\": \"ParticipantController[GET](/participants/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/participants?room=id 테스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"user-id\" : \"초대할 사용자 id\",\n    \"role\" : \"[guest | host]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/participants?room=1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"participants"
+					],
+					"query": [
+						{
+							"key": "room",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/participants?room=id 테스트",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\",\n    \"user-id\" : \"2\",\n    \"role\" : \"guest\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/participants?room=1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"participants"
+							],
+							"query": [
+								{
+									"key": "room",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "148"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"participant\": {\n            \"id\": 2,\n            \"role\": \"guest\",\n            \"roomId\": 1,\n            \"userId\": 2\n        }\n    },\n    \"message\": \"ParticipantController[SAVE](/participants?room=1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/participants/id?room=id 테스트",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/participants/2?room=1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"participants",
+						"2"
+					],
+					"query": [
+						{
+							"key": "room",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/participants/id?room=id 테스트",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/participants/2?room=1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"participants",
+								"2"
+							],
+							"query": [
+								{
+									"key": "room",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "163"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"message\": \"ParticipantController[DELETE](/participants/2?room=1) : ok\"\n    },\n    \"message\": \"ParticipantController[DELETE](/participants/2?room=1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/rooms 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/rooms",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/rooms 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/rooms",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "108"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"array\": [\n            {\n                \"room\": {\n                    \"id\": 1,\n                    \"name\": \"room\"\n                }\n            }\n        ]\n    },\n    \"message\": \"RoomController[GET](/rooms) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/rooms/id 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/rooms/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"rooms",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/rooms/id 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/rooms/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"rooms",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "98"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"room\": {\n            \"id\": 1,\n            \"name\": \"room\"\n        }\n    },\n    \"message\": \"RoomController[GET](/rooms/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/rooms/id 테스트",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"name\" : \"room-name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/rooms/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"rooms",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/rooms/id 테스트",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\",\n    \"name\" : \"room\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/rooms/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"rooms",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "101"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"room\": {\n            \"id\": 1,\n            \"name\": \"room\"\n        }\n    },\n    \"message\": \"RoomController[UPDATE](/rooms/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/rooms/id 테스트",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/rooms/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"rooms",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/rooms/id 테스트",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/rooms/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"rooms",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "121"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"message\": \"RoomController[DELETE](/rooms/1) : ok\"\n    },\n    \"message\": \"RoomController[DELETE](/rooms/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/rooms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"name\" : \"room-name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/rooms",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/rooms",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\",\n    \"name\" : \"testRoom\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/rooms",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "174"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"array\": [\n            {\n                \"participant\": {\n                    \"id\": 1,\n                    \"role\": \"host\",\n                    \"roomId\": 1,\n                    \"userId\": 1\n                }\n            },\n            {\n                \"room\": {\n                    \"id\": 1,\n                    \"name\": \"testRoom\"\n                }\n            }\n        ]\n    },\n    \"message\": \"RoomController[SAVE](/rooms) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/users?company=id 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/users?company=1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "company",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/users?company=id 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/users?company=1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "company",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "271"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"array\": [\n            {\n                \"user\": {\n                    \"companyId\": 1,\n                    \"email\": \"colabofyyr@gmail.com\",\n                    \"id\": 1,\n                    \"name\": \"teddy\",\n                    \"role\": \"boss\"\n                }\n            },\n            {\n                \"user\": {\n                    \"companyId\": 1,\n                    \"email\": \"dbsdudfh01@korea.ac.kr\",\n                    \"id\": 2,\n                    \"name\": \"bear\",\n                    \"role\": \"boss\"\n                }\n            }\n        ]\n    },\n    \"message\": \"UserController[GET](/users?company=1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/users/id 테스트",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/users/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/users/id 테스트",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/users/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "158"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"user\": {\n            \"companyId\": 1,\n            \"email\": \"colabofyyr@gmail.com\",\n            \"id\": 1,\n            \"name\": \"teddy\",\n            \"role\": \"boss\"\n        }\n    },\n    \"message\": \"UserController[GET](/users/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/users/id 테스트",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"name\" : \"user-name\",\n    \"email\" : \"email\",\n    \"password\" : \"password\",\n    \"role\" : \"role\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/users/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/users/id 테스트",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\",\n    \"name\" : \"teddy\",\n    \"email\" : \"kusecurechat@gmail.com\",\n    \"password\" : \"1123\",\n    \"role\" : \"boss\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/users/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "163"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"user\": {\n            \"companyId\": 1,\n            \"email\": \"kusecurechat@gmail.com\",\n            \"id\": 1,\n            \"name\": \"teddy\",\n            \"role\": \"boss\"\n        }\n    },\n    \"message\": \"UserController[UPDATE](/users/1) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/users 테스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\",\n    \"name\" : \"name\",\n    \"email\" : \"email\",\n    \"role\" : \"role\",\n    \"password\" : \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/users",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/users 테스트",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"10716396149328081046\",\n    \"session-token\" : \"2Lyo9OTWqxeGXbplOPFRfIAsxvLO3QNoYmLqPuwQysmCcp0VRV7uxr5xtai49A2fMmfcBzLk1iflt99wy7Y6Ro1dAbzjGug5uZcIObSGbF1si2XqlTWcrlnsxOHSlOZMjvnIFqSpZLbYOLwKPNPecitaMUAfhvI9084P3sEguMM1PyI9vz0vsApV6GIbPoF85VluiOB9xJ6781A31m79RPwKvrnPAlNQQTcZfF29FvoD9xlC41eceOttjBRL5PMo\",\n    \"name\" : \"teddy\",\n    \"email\" : \"colabofyyr@gmail.com\",\n    \"role\" : \"boss\",\n    \"password\" : \"1123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/users",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "157"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"user\": {\n            \"companyId\": 1,\n            \"email\": \"colabofyyr@gmail.com\",\n            \"id\": 1,\n            \"name\": \"teddy\",\n            \"role\": \"boss\"\n        }\n    },\n    \"message\": \"UserController[SAVE](/users) : ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/users/id 테스트",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"session-id\" : \"session-id\",\n    \"session-token\" : \"session-token\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.64.190.215:9000/users/1",
+					"protocol": "http",
+					"host": [
+						"34",
+						"64",
+						"190",
+						"215"
+					],
+					"port": "9000",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/users/id 테스트",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session-id\" : \"779833876405741172\",\n    \"session-token\" : \"VSi20naP54770y1wKUaZu3FukUpyrhb3uErzk2tPBHLnSHri3W7fwR6IjfcgqnSc8UHCG1I8xtL70A61FuIVYSqH984S7ds3bC4xylpHKuxYoQnX1X3JfO01DcshziF9FexWImzMwcHiZrMXDlaGZx0qPAgsG4V7hQ455cgkqd07nGTz9XyApNg10dzzgh7yVtfxifxnbAYMiqZ8aSKBJaHOxCv2ChisDYs9AnbtuK7WUyQ87XOGAablYFUmFJYQ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://34.64.190.215:9000/users/1",
+							"protocol": "http",
+							"host": [
+								"34",
+								"64",
+								"190",
+								"215"
+							],
+							"port": "9000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "121"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"message\": \"UserController[DELETE](/users/1) : ok\"\n    },\n    \"message\": \"UserController[DELETE](/users/1) : ok\"\n}"
+				}
+			]
+		}
+	]
+}
