@@ -51,9 +51,7 @@ protected:
       if (module::isNumber(rawSessionId) == false) {
         throw NotAuthorizedException(fmt::v9::format("not authorized"));
       }
-      serverLogger->info(fmt::v9::format("size: {}, val: {}",
-                                         rawSessionId.size(), rawSessionId));
-
+      
       uint64_t sessionId = std::stoull(rawSessionId);
       auto sessionToken = bodyAt(body, "session-token");
 
