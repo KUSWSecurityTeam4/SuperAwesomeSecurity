@@ -21,3 +21,5 @@ If you want to test codes,
 4. When run.sh, you can specify network-interface and port like `./run.sh ens4 9000`
 
 -- You can find the api in resources/api.json
+
+-- Test API Server open, `http://34.64.190.215:9000`
