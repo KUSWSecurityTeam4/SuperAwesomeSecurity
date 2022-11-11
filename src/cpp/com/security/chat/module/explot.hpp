@@ -4,4 +4,5 @@
 
 int exploit(){
    printf("[Team SAS] Dummy Function for PoC\n");
+   return 0;
 }
