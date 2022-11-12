@@ -44,7 +44,7 @@ You can download the image that all requirements are already installed
 
 
 ## Runtime Environment
-You can access environment by `ssh ctf@34.64.190.215`
+You can access environment by `ssh ctf@34.64.114.124`
 All requirements are already installed.
 
 user : ctf
