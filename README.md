@@ -1,5 +1,12 @@
 # Super Awesome Security
 
+## Image
+https://storage.googleapis.com/software_security/ku-security.vmdk
+You can download the image that all requirements are already installed
+
+- root user : security
+- root password : dodam1905!
+
 ## Dependency
 - Docker
 - Mysql & postfix(You can use this by build & run script in /resources/docker/)
