@@ -1,11 +1,40 @@
 # Super Awesome Security
 
-## Runtime Environment
-You can access environment by `ssh security@34.64.190.215`
-All required already installed.
+## Dependency
+- Docker
+- Mysql & postfix(You can use this by build & run script in /resources/docker/)
+- openssl 3(https://github.com/openssl/openssl/blob/master/INSTALL.md)
+- spdlog(apt install libspdlog-dev, https://github.com/gabime/spdlog)
+- fmt(https://github.com/fmtlib/fmt)
+- cpprestsdk(https://github.com/Microsoft/cpprestsdk/wiki/How-to-build-for-Linux)
+- g++ 10.3.0(https://launchpad.net/~savoury1/+archive/ubuntu/gcc-10)
+- boost(https://www.boost.org/users/history/version_1_80_0.html)
+- mysql connector/c++ 8.0(https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-installation-binary.html)
 
-user : security
-password: 1123
+## Build
+- (Notice) You should add current user in `docker` group(Run docker without `sudo`)
+- Run `src/cpp/com/security/chat/build.sh`
+- Run `src/resource/docker/build.sh & run.sh`
+- Check mysql is ready. And then, inject schema in db by `mysql -h [public-ip] -u security -p chat < resources/sql/table.sql`
+- Check DB_HOST in `run.sh`(it should be same as your public IP address)
+
+## Run
+- Run `src/cpp/com/security/chat/run.sh [non-loopback-ip-interface] [port]` like `run.sh ens4 9000`
+
+## Test
+- Check the api in `src/resource/api.json`
+- You can test them via some tools like postman
+
+
+## Runtime Environment
+You can access environment by `ssh ctf@34.64.190.215`
+All requirements are already installed.
+
+user : ctf
+password: security
+
+If you want to run executable, Move `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Test`.
+Run `run.sh` & The log is `secure_chat.log`
 
 You can show database information in `run.sh`
 db name : chat
@@ -15,15 +44,12 @@ db password : 1123
 You can also the schema in resources/sql/table.sql files
 
 If you want to test codes,
-1. run .sh files in resources(build.sh -> run.sh)
-2. inject table in resources/sq/table.sql in mysql in docker
-3. After checking db is ready, run build.sh & run.sh
-4. When run.sh, you can specify network-interface and port like `./run.sh ens4 9000`
+- When run.sh, you can specify network-interface and port like `./run.sh ens4 9000`
 
 -- You can find the api in resources/api.json
 
 ## Test API Server open, `http://34.64.190.215:9000`
-  - Super user id & password is 'company', '1123'.
+  - Initial company name & password is 'company', '1123'.
   - You can login by the api
   ```
   POST /auth/login?type=company
