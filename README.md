@@ -42,16 +42,16 @@ You can run this image on Virtual Box(We already test it)
     2. If "mysql" or "postfix" container are running, execute `docker stop mysql postfix`
     3. Execute `docker container prune`
     4. Execute `./run.sh`
-- Check mysql is ready. And then, inject schema in db by `mysql -h [public-ip] -u security -p chat < resources/sql/table.sql`
-  - You can easily check it by
+- Check mysql is ready. And then, inject schema in db by `mysql -h [docker-private-ip of mysql] -u security -p chat < resources/sql/table.sql`
+  - To find private ip, 
+    1. docker network inspect bridge
+    2. Check container -> the ip of mysql. It may be `172.17.0.x`
+  - You can easily check whether mysql is running or not,
     1. `docker exec -it mysql /bin/bash`
     2. `mysql -u security -p` -> password: 1123
     3. If you enter mysql shell, then ok!
 - Check DB_HOST in `run.sh`
   - DB_HOST is your "network-interface-ip" or "docker-private-ip of mysql"
-  - To find private ip, 
-    1. docker network inspect bridge
-    2. Check container -> the ip of mysql. It may be `172.17.0.x`
 
 ## Run
 - Run `src/cpp/com/security/chat/run.sh [non-loopback-ip-interface] [port]` like `run.sh ens4 9000`
