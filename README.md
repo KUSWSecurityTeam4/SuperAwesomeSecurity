@@ -7,6 +7,8 @@ You can download the image that all requirements are already installed
 - root user : security
 - root password : dodam1905!
 
+You can run this image on Virtual Box(We already test it)
+
 ## Dependency
 - Docker
 - Mysql & postfix(You can use this by build & run script in /resources/docker/)
@@ -30,13 +32,28 @@ You can download the image that all requirements are already installed
 
 ## Build
 - (Notice) You should add current user in `docker` group(Run docker without `sudo`)
+  - If you use the image, skip this
 - Run `src/cpp/com/security/chat/build.sh`
 - Run `src/resource/docker/build.sh & run.sh`
+  - When execute `run.sh`, If error messages like "already used name" are noticed,
+    1. Check current running containers(`docker ps`)
+    2. If "mysql" or "postfix" container are running, execute `docker stop mysql postfix`
+    3. Execute `docker container prune`
+    4. Execute `./run.sh`
 - Check mysql is ready. And then, inject schema in db by `mysql -h [public-ip] -u security -p chat < resources/sql/table.sql`
-- Check DB_HOST in `run.sh`(it should be same as your public IP address)
+  - You can easily check it by
+    1. `docker exec -it mysql /bin/bash`
+    2. `mysql -u security -p` -> password: 1123
+    3. If you enter mysql shell, then ok!
+- Check DB_HOST in `run.sh`
+  - DB_HOST is your "network-interface-ip" or "docker-private-ip of mysql"
+  - To find private ip, 
+    1. docker network inspect bridge
+    2. Check container -> the ip of mysql. It may be `172.17.0.x`
 
 ## Run
 - Run `src/cpp/com/security/chat/run.sh [non-loopback-ip-interface] [port]` like `run.sh ens4 9000`
+- You can access the server external if you expose your ip to public
 
 ## Test
 - Check the api in `src/resource/api.json`
@@ -60,12 +77,9 @@ db password : 1123
 
 You can also the schema in resources/sql/table.sql files
 
-If you want to test codes,
-- When run.sh, you can specify network-interface and port like `./run.sh ens4 9000`
-
 -- You can find the api in resources/api.json
 
-## Test API Server open, `http://34.64.190.215:9000`
+## Test API Server open, `http://34.64.114.124:9000`
   - Initial company name & password is 'company', '1123'.
   - You can login by the api
   ```
