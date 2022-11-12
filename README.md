@@ -4,12 +4,22 @@
 - Docker
 - Mysql & postfix(You can use this by build & run script in /resources/docker/)
 - openssl 3(https://github.com/openssl/openssl/blob/master/INSTALL.md)
-- spdlog(apt install libspdlog-dev, https://github.com/gabime/spdlog)
+  - Follow the guide in link.
+- spdlog(https://github.com/gabime/spdlog)
+  - apt install libspdlog-dev
 - fmt(https://github.com/fmtlib/fmt)
+  1. Clone the repo
+  2. `cd fmt` -> `mkdir build` -> `cd build` -> `cmake -DCMAKE_BUILD_TYPE=Release ..` -> `make` -> `sudo make install` 
 - cpprestsdk(https://github.com/Microsoft/cpprestsdk/wiki/How-to-build-for-Linux)
+  - Follow the guide in link
 - g++ 10.3.0(https://launchpad.net/~savoury1/+archive/ubuntu/gcc-10)
+  - Follow the guide in link to add ppa-repository
+  - `apt-get install g++-10` -> `ln -sf /usr/bin/g++ /usr/bin/g++-10`
 - boost(https://www.boost.org/users/history/version_1_80_0.html)
+  - Download the files
+  - Follow this guide. (https://stackoverflow.com/questions/12578499/how-to-install-boost-on-ubuntu)
 - mysql connector/c++ 8.0(https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-installation-binary.html)
+  - Follow the guide in link
 
 ## Build
 - (Notice) You should add current user in `docker` group(Run docker without `sudo`)
