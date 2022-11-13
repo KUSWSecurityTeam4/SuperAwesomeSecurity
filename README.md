@@ -1,5 +1,7 @@
 # Super Awesome Security
 
+**We provide back-end server, not front. So you should use api testing tools like postman**
+
 ## Image
 https://storage.googleapis.com/software_security/ku-security.vmdk. 
 
@@ -12,7 +14,9 @@ You can download the image that all requirements are already installed
 You can run this image on Virtual Box(We already test it)
 
 **Builded file already exists**
-You can find this at `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Test`
+
+If you want to run this, Move `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Test`.
+Execute `run.sh` & The log is `secure_chat.log`
 
 
 See **Run part**
@@ -39,7 +43,8 @@ See **Run part**
 - mysql connector/c++ 8.0(https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-installation-binary.html)
   - Follow the guide in link
 
-## Build
+## Build & Run
+**If you use a virtual machine, you should do port-forwading**
 - (Notice) You should add current user in `docker` group(Run docker without `sudo`)
   - If you use the image, skip this
 - Run `src/cpp/com/security/chat/build.sh`
@@ -59,17 +64,15 @@ See **Run part**
     3. If you enter mysql shell, then ok!
 - Check DB_HOST in `run.sh`
   - DB_HOST is your "network-interface-ip" or "docker-private-ip of mysql"
-
-## Run
 - Run `src/cpp/com/security/chat/run.sh [non-loopback-ip-interface] [port]` like `run.sh ens4 9000`
 - You should check mysql & postfix container are running. See **Build** part
 - You can access the server external if you expose your ip to public
-- **If you use a virtual machine, you should do port-forwading**
 
 ## Test
 - Check the api in `src/resource/api.json`
 - You can test them via some tools like **postman**
-  - You can show well-formatted api docs when you import this in **postman**
+  - You can show well-formed api docs when you import this in **postman**
+- Initial company name & password is 'company', '1123'.
 
 
 ## Runtime Environment
@@ -78,9 +81,6 @@ All requirements are already installed.
 
 user : ctf
 password: security
-
-If you want to run executable, Move `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Test`.
-Run `run.sh` & The log is `secure_chat.log`
 
 You can show database information in `run.sh`
 db name : chat
@@ -92,7 +92,7 @@ You can also the schema in resources/sql/table.sql files
 -- You can find the api in resources/api.json
 
 ## Test API Server open, `http://34.64.114.124:9000`
-  - Initial company name & password is 'company', '1123'.
+  - 
   - You can login by the api
   ```
   POST /auth/login?type=company
@@ -127,3 +127,4 @@ You can also the schema in resources/sql/table.sql files
   Calling all apis except login MUST require session id & token. You can get them after login
   
   
+## Virtual-box port-forwarding
