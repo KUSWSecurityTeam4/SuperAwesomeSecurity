@@ -63,10 +63,11 @@ See **Run part**
     2. `mysql -u security -p` -> password: 1123
     3. If you enter mysql shell, then ok!
 - Check DB_HOST in `run.sh`
-  - DB_HOST is your "network-interface-ip" or "docker-private-ip of mysql"
-- Run `src/cpp/com/security/chat/run.sh [non-loopback-ip-interface] [port]` like `run.sh ens4 9000`
+  - DB_HOST is your "docker-private-ip of mysql"
+- Run `src/cpp/com/security/chat/run.sh [loop-back interface] [port]` like `run.sh lo 9000`
+  - If you want to access apis out the VM, you should specify [non-loop-back interface] & port-forwarding VM with host
 - You should check mysql & postfix container are running. See **Build** part
-- You can access the server external if you expose your ip to public
+- You can access apis in the virtual machine
 
 ## Test
 - Check the api in `src/resource/api.json`
