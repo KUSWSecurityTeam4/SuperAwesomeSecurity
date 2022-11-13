@@ -125,7 +125,4 @@ You can also the schema in resources/sql/table.sql files
     "message": "AuthController[LOGIN](/auth/login?type=company) : ok"
     }
   ```
-  Calling all apis except login MUST require session id & token. You can get them after login
-  
-  
-## Virtual-box port-forwarding
+  **See api.json**
