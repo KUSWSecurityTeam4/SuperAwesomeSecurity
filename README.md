@@ -61,6 +61,7 @@ See **Run part**
 
 ## Run
 - Run `src/cpp/com/security/chat/run.sh [non-loopback-ip-interface] [port]` like `run.sh ens4 9000`
+- You should check mysql & postfix container are running. See **Build** part
 - You can access the server external if you expose your ip to public
 
 ## Test
