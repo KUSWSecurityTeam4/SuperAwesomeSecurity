@@ -18,6 +18,7 @@ You can find this at `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Te
 See **Run part**
 
 ## Dependency
+**If you download the image, this part isn't needed**
 - Docker
 - Mysql & postfix(You can use this by build & run script in /resources/docker/)
 - openssl 3(https://github.com/openssl/openssl/blob/master/INSTALL.md)
@@ -66,7 +67,8 @@ See **Run part**
 
 ## Test
 - Check the api in `src/resource/api.json`
-- You can test them via some tools like postman
+- You can test them via some tools like **postman**
+  - You can show well-formatted api docs when you import this in **postman**
 
 
 ## Runtime Environment
