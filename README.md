@@ -11,6 +11,12 @@ You can download the image that all requirements are already installed
 
 You can run this image on Virtual Box(We already test it)
 
+**Builded file already exists**
+You can find this at `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Test`
+
+
+See **Run part**
+
 ## Dependency
 - Docker
 - Mysql & postfix(You can use this by build & run script in /resources/docker/)
