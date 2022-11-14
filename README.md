@@ -71,9 +71,12 @@ More details, see **Run part**
 - You can access apis in the virtual machine
 
 ## Test
+**https://[your-ip-address]:[your-port]/[some-path]**
+
 - Check the api in `src/resource/api.json`
 - You can test them via some tools like **postman**
   - You can show well-formed api docs when you import this in **postman**
+  - If you want to use some browser, we recommand **firefox** 
 - Initial company name & password is 'company', '1123'.
 
 ## Database
@@ -91,8 +94,7 @@ All requirements are already installed.
 user : ctf
 password: security
 
-## Test API Server open, `http://34.64.114.124:9000`
-  - 
+## Test API Server opens, `https://34.64.114.124:9000`
   - You can login by the api
   ```
   POST /auth/login?type=company
