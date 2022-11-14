@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   auto ipAddress = module::getIpAddr(argv[1]);
   auto port = argv[2];
 
-  auto apiUri = module::buildUri("http", ipAddress, port);
+  auto apiUri = module::buildUri("https", ipAddress, port);
 
   auto dbUser = std::getenv("DB_USER");
   auto dbHost = std::getenv("DB_HOST");
