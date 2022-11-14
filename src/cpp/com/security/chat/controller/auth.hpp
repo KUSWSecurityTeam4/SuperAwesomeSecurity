@@ -23,12 +23,12 @@ using namespace chat::module::exception;
 #include <cpprest/uri.h>
 #include <cpprest/uri_builder.h>
 
+#include <atomic>
 #include <exception>
 #include <functional>
 #include <memory>
 #include <string>
 #include <thread>
-#include <atomic>
 
 namespace chat::controller {
 class AuthController : public BaseController {
@@ -48,11 +48,11 @@ public:
 
     this->loginUri = baseBuilder.set_path("/auth/login").to_uri();
     this->loginListener = web::http::experimental::listener::http_listener{
-        this->loginUri, *std::atomic_load(config)};
+        this->loginUri, *std::atomic_load(&config)};
 
     this->logoutUri = baseBuilder.set_path("/auth/logout").to_uri();
     this->logoutListener = web::http::experimental::listener::http_listener{
-        this->logoutUri, *std::atomic_load(config)};
+        this->logoutUri, *std::atomic_load(&config)};
   }
 
   static void handleLogin(web::http::http_request request) {
