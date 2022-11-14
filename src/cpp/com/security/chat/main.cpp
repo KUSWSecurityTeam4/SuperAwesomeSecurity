@@ -64,8 +64,8 @@ int main(int argc, char **argv) {
         apiUri, serverLogger, connection, config);
     // auto authController = controller::AuthController::getInstance(
     //     apiUri, serverLogger, connection, config);
-    // auto userController = controller::UserController::getInstance(
-    //     apiUri, serverLogger, connection, config);
+    auto userController = controller::UserController::getInstance(
+        apiUri, serverLogger, connection, config);
 
     // auto roomController = controller::RoomController::getInstance(
     //     apiUri, serverLogger, connection, config);
@@ -87,9 +87,9 @@ int main(int argc, char **argv) {
     //     &controller::AuthController::listen,
     //     std::dynamic_pointer_cast<controller::AuthController>(authController));
 
-    // auto userThread = std::thread(
-    //     &controller::UserController::listen,
-    //     std::dynamic_pointer_cast<controller::UserController>(userController));
+    auto userThread = std::thread(
+        &controller::UserController::listen,
+        std::dynamic_pointer_cast<controller::UserController>(userController));
 
     // auto roomThread = std::thread(
     //     &controller::RoomController::listen,
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 
     companyThread.join();
     // authThread.join();
-    // userThread.join();
+    userThread.join();
     // roomThread.join();
     // participantThread.join();
     // invitationThread.join();
