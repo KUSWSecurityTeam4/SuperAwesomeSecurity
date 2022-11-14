@@ -62,8 +62,8 @@ int main(int argc, char **argv) {
   try {
     auto companyController = controller::CompanyController::getInstance(
         apiUri, serverLogger, connection, config);
-    // auto authController = controller::AuthController::getInstance(
-    //     apiUri, serverLogger, connection, config);
+    auto authController = controller::AuthController::getInstance(
+        apiUri, serverLogger, connection, config);
     auto userController = controller::UserController::getInstance(
         apiUri, serverLogger, connection, config);
 
@@ -81,9 +81,9 @@ int main(int argc, char **argv) {
                     std::dynamic_pointer_cast<controller::CompanyController>(
                         companyController));
 
-    // auto authThread = std::thread(
-    //     &controller::AuthController::listen,
-    //     std::dynamic_pointer_cast<controller::AuthController>(authController));
+    auto authThread = std::thread(
+        &controller::AuthController::listen,
+        std::dynamic_pointer_cast<controller::AuthController>(authController));
 
     auto userThread = std::thread(
         &controller::UserController::listen,
