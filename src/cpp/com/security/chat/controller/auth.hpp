@@ -34,7 +34,7 @@ namespace chat::controller {
 class AuthController : public BaseController {
 public:
   static std::shared_ptr<AuthController>
-  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG config) {
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG &config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
       instance =
@@ -42,17 +42,17 @@ public:
     }
     return instance;
   }
-  AuthController(web::uri baseUri, L serverLogger, CN con, CONFIG config)
+  AuthController(web::uri baseUri, L serverLogger, CN con, CONFIG &config)
       : BaseController(baseUri, serverLogger, conn, config) {
     web::uri_builder baseBuilder{baseUri};
 
     this->loginUri = baseBuilder.set_path("/auth/login").to_uri();
     this->loginListener = web::http::experimental::listener::http_listener{
-        this->loginUri, *std::atomic_load(&config)};
+        this->loginUri, config};
 
     this->logoutUri = baseBuilder.set_path("/auth/logout").to_uri();
     this->logoutListener = web::http::experimental::listener::http_listener{
-        this->logoutUri, *std::atomic_load(&config)};
+        this->logoutUri, config};
   }
 
   static void handleLogin(web::http::http_request request) {

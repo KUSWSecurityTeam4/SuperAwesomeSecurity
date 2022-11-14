@@ -55,8 +55,7 @@ int main(int argc, char **argv) {
   auto sslKeyPath = std::getenv("KEY_PATH");
   auto sslDhPath = std::getenv("DH_PATH");
 
-  std::shared_ptr<web::http::experimental::listener::http_listener_config>
-      config = controller::ssl::configSSL(sslKeyPath, sslCrtPath, sslDhPath);
+  auto &&config = controller::ssl::configSSL(sslKeyPath, sslCrtPath, sslDhPath);
 
   serverLogger->info(fmt::v9::format("apiUri : {}", apiUri.to_string()));
 

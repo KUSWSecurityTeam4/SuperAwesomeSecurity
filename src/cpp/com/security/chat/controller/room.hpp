@@ -35,7 +35,7 @@ namespace chat::controller {
 class RoomController : public BaseController {
 public:
   static std::shared_ptr<RoomController>
-  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG config) {
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG &config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
       instance =
@@ -43,7 +43,7 @@ public:
     }
     return instance;
   }
-  RoomController(web::uri baseUri, L serverLogger, CN conn, CONFIG config)
+  RoomController(web::uri baseUri, L serverLogger, CN conn, CONFIG &config)
       : BaseController(baseUri, serverLogger, conn, config),
         roomService(service::RoomService::getInstance(serverLogger, conn)),
         participantService(
@@ -51,7 +51,7 @@ public:
     web::uri_builder builder{baseUri};
     this->listenUri = builder.set_path("/rooms").to_uri();
     this->listener = web::http::experimental::listener::http_listener{
-        this->listenUri, *config};
+        this->listenUri, config};
   }
 
   static void handleGet(web::http::http_request request) {

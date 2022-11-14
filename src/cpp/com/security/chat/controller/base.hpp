@@ -28,8 +28,7 @@ public:
   using L = std::shared_ptr<spdlog::logger>;
   using CN = std::shared_ptr<module::Connection>;
   using SV = std::shared_ptr<service::BaseService>;
-  using CONFIG =
-      std::shared_ptr<web::http::experimental::listener::http_listener_config>;
+  using CONFIG = web::http::experimental::listener::http_listener_config;
 
   virtual void listen() = 0;
 
@@ -74,7 +73,7 @@ protected:
     }
   }
 
-  BaseController(web::uri baseUri, L serverLogger, CN conn, CONFIG config)
+  BaseController(web::uri baseUri, L serverLogger, CN conn, CONFIG &config)
       : serverLogger(serverLogger), conn(conn), config(config),
         authService(service::AuthService::getInstance(serverLogger, conn)) {}
   BaseController() = delete;

@@ -34,7 +34,7 @@ namespace chat::controller {
 class ParticipantController : public BaseController {
 public:
   static std::shared_ptr<ParticipantController>
-  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG config) {
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG &config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
       instance = std::make_shared<ParticipantController>(baseUri, serverLogger,
@@ -43,14 +43,14 @@ public:
     return instance;
   }
   ParticipantController(web::uri baseUri, L serverLogger, CN conn,
-                        CONFIG config)
+                        CONFIG &config)
       : BaseController(baseUri, serverLogger, conn, config),
         participantService(
             service::ParticipantService::getInstance(serverLogger, conn)) {
     web::uri_builder builder{baseUri};
     this->listenUri = builder.set_path("/participants").to_uri();
     this->listener = web::http::experimental::listener::http_listener{
-        this->listenUri, *config};
+        this->listenUri, config};
   }
 
   static void handleGet(web::http::http_request request) {
