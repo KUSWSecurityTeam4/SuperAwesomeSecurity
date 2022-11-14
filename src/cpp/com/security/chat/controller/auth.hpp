@@ -46,10 +46,10 @@ public:
       : BaseController(baseUri, serverLogger, conn, config) {
     web::uri_builder baseBuilder{baseUri};
 
-    auto loginConfig = CONFIG{config};
-    this->loginUri = baseBuilder.set_path("/auth/login").to_uri();
-    this->loginListener = web::http::experimental::listener::http_listener{
-        this->loginUri, loginConfig};
+    // auto loginConfig = CONFIG{config};
+    // this->loginUri = baseBuilder.set_path("/auth/login").to_uri();
+    // this->loginListener = web::http::experimental::listener::http_listener{
+    //     this->loginUri, loginConfig};
 
     auto logoutConfig = CONFIG{config};
     this->logoutUri = baseBuilder.set_path("/auth/logout").to_uri();
@@ -269,16 +269,17 @@ public:
     std::function<void(web::http::http_request)> logoutHandler =
         &AuthController::handleLogout;
 
-    loginListener.support(web::http::methods::POST, loginHandler);
+    // loginListener.support(web::http::methods::POST, loginHandler);
     logoutListener.support(web::http::methods::DEL, logoutHandler);
 
     try {
-      loginListener.open()
-          .then([this]() {
-            serverLogger->info(fmt::v9::format("AuthController : Listening {}",
-                                               loginUri.to_string()));
-          })
-          .wait();
+      // loginListener.open()
+      //     .then([this]() {
+      //       serverLogger->info(fmt::v9::format("AuthController : Listening
+      //       {}",
+      //                                          loginUri.to_string()));
+      //     })
+      //     .wait();
 
       logoutListener.open()
           .then([this]() {
