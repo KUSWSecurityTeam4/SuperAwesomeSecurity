@@ -16,10 +16,9 @@ You can run this image on Virtual Box(We already test it)
 **Builded file already exists**
 
 If you want to run this, Move `/home/security/KoreaUniversity_SoftwareSecurity_GIT_CTF/Test`.
-Execute `run.sh` & The log is `secure_chat.log`
+Execute `run.sh [network-interface] [port]` & The log is `secure_chat.log`
 
-
-See **Run part**
+More details, see **Run part**
 
 ## Dependency
 **If you download the image, this part isn't needed**
@@ -43,8 +42,8 @@ See **Run part**
 - mysql connector/c++ 8.0(https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-installation-binary.html)
   - Follow the guide in link
 
-## Build & Run
-**If you use a virtual machine, you should do port-forwading**
+## Build
+**If you use a virtual machine, and you want to access the server at host, not vm, you should do port-forwading**
 - (Notice) You should add current user in `docker` group(Run docker without `sudo`)
   - If you use the image, skip this
 - Run `src/cpp/com/security/chat/build.sh`
@@ -64,8 +63,10 @@ See **Run part**
     3. If you enter mysql shell, then ok!
 - Check DB_HOST in `run.sh`
   - DB_HOST is your "docker-private-ip of mysql"
-- Run `src/cpp/com/security/chat/run.sh [loop-back interface] [port]` like `run.sh lo 9000`
-  - If you want to access apis out the VM, you should specify [non-loop-back interface] & port-forwarding VM with host
+  
+## Run
+- Run `src/cpp/com/security/chat/run.sh [network interface] [port]` like `run.sh lo 9000`
+  - If you want to access apis at host, you should specify [non-loop-back interface] & port-forwarding VM with host
 - You should check mysql & postfix container are running. See **Build** part
 - You can access apis in the virtual machine
 
@@ -75,14 +76,7 @@ See **Run part**
   - You can show well-formed api docs when you import this in **postman**
 - Initial company name & password is 'company', '1123'.
 
-
-## Runtime Environment
-You can access environment by `ssh ctf@34.64.114.124`
-All requirements are already installed.
-
-user : ctf
-password: security
-
+## Database
 You can show database information in `run.sh`
 db name : chat
 db user : security
@@ -90,7 +84,12 @@ db password : 1123
 
 You can also the schema in resources/sql/table.sql files
 
--- You can find the api in resources/api.json
+## Runtime Environment
+You can access environment by `ssh ctf@34.64.114.124`
+All requirements are already installed.
+
+user : ctf
+password: security
 
 ## Test API Server open, `http://34.64.114.124:9000`
   - 
