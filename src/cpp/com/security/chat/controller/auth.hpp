@@ -274,8 +274,7 @@ public:
     try {
       loginListener.open()
           .then([this]() {
-            serverLogger->info(fmt::v9::format("AuthController : Listening
-                                               {} ",
+            serverLogger->info(fmt::v9::format("AuthController : Listening {} ",
                                                loginUri.to_string()));
           })
           .wait();
