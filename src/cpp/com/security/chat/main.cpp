@@ -62,53 +62,55 @@ int main(int argc, char **argv) {
   try {
     auto companyController = controller::CompanyController::getInstance(
         apiUri, serverLogger, connection, config);
-    auto authController = controller::AuthController::getInstance(
-        apiUri, serverLogger, connection, config);
-    auto userController = controller::UserController::getInstance(
-        apiUri, serverLogger, connection, config);
+    // auto authController = controller::AuthController::getInstance(
+    //     apiUri, serverLogger, connection, config);
+    // auto userController = controller::UserController::getInstance(
+    //     apiUri, serverLogger, connection, config);
 
-    auto roomController = controller::RoomController::getInstance(
-        apiUri, serverLogger, connection, config);
+    // auto roomController = controller::RoomController::getInstance(
+    //     apiUri, serverLogger, connection, config);
 
-    auto participantController = controller::ParticipantController::getInstance(
-        apiUri, serverLogger, connection, config);
+    // auto participantController =
+    // controller::ParticipantController::getInstance(
+    //     apiUri, serverLogger, connection, config);
 
-    auto invitationController = controller::InvitationController::getInstance(
-        apiUri, serverLogger, connection, config);
+    // auto invitationController =
+    // controller::InvitationController::getInstance(
+    //     apiUri, serverLogger, connection, config);
 
     auto companyThread =
         std::thread(&controller::CompanyController::listen,
                     std::dynamic_pointer_cast<controller::CompanyController>(
                         companyController));
 
-    auto authThread = std::thread(
-        &controller::AuthController::listen,
-        std::dynamic_pointer_cast<controller::AuthController>(authController));
+    // auto authThread = std::thread(
+    //     &controller::AuthController::listen,
+    //     std::dynamic_pointer_cast<controller::AuthController>(authController));
 
-    auto userThread = std::thread(
-        &controller::UserController::listen,
-        std::dynamic_pointer_cast<controller::UserController>(userController));
+    // auto userThread = std::thread(
+    //     &controller::UserController::listen,
+    //     std::dynamic_pointer_cast<controller::UserController>(userController));
 
-    auto roomThread = std::thread(
-        &controller::RoomController::listen,
-        std::dynamic_pointer_cast<controller::RoomController>(roomController));
+    // auto roomThread = std::thread(
+    //     &controller::RoomController::listen,
+    //     std::dynamic_pointer_cast<controller::RoomController>(roomController));
 
-    auto participantThread = std::thread(
-        &controller::ParticipantController::listen,
-        std::dynamic_pointer_cast<controller::ParticipantController>(
-            participantController));
+    // auto participantThread = std::thread(
+    //     &controller::ParticipantController::listen,
+    //     std::dynamic_pointer_cast<controller::ParticipantController>(
+    //         participantController));
 
-    auto invitationThread =
-        std::thread(&controller::InvitationController::listen,
-                    std::dynamic_pointer_cast<controller::InvitationController>(
-                        invitationController));
+    // auto invitationThread =
+    //     std::thread(&controller::InvitationController::listen,
+    //                 std::dynamic_pointer_cast<controller::InvitationController>(
+    //                     invitationController));
 
     companyThread.join();
-    authThread.join();
-    userThread.join();
-    roomThread.join();
-    participantThread.join();
-    invitationThread.join();
+    // authThread.join();
+    // userThread.join();
+    // roomThread.join();
+    // participantThread.join();
+    // invitationThread.join();
 
   } catch (const std::exception &e) {
     serverLogger->error(e.what());
