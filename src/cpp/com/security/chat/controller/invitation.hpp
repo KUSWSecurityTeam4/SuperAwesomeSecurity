@@ -36,16 +36,16 @@ namespace chat::controller {
 class InvitationController : public BaseController {
 public:
   static std::shared_ptr<InvitationController>
-  getInstance(web::uri baseUri, L serverLogger, CN conn) {
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
-      instance =
-          std::make_shared<InvitationController>(baseUri, serverLogger, conn);
+      instance = std::make_shared<InvitationController>(baseUri, serverLogger,
+                                                        conn, config);
     }
     return instance;
   }
-  InvitationController(web::uri baseUri, L serverLogger, CN conn)
-      : BaseController(baseUri, serverLogger, conn),
+  InvitationController(web::uri baseUri, L serverLogger, CN conn, CONFIG config)
+      : BaseController(baseUri, serverLogger, conn, config),
         invitationService(
             service::InvitationService::getInstance(serverLogger, conn)),
         participantService(
@@ -53,8 +53,8 @@ public:
 
     web::uri_builder builder{baseUri};
     this->listenUri = builder.set_path("/invitations").to_uri();
-    this->listener =
-        web::http::experimental::listener::http_listener{this->listenUri};
+    this->listener = web::http::experimental::listener::http_listener{
+        this->listenUri, *config};
   }
 
   static void handleInvitation(web::http::http_request request) {

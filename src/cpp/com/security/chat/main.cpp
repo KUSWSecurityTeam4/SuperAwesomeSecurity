@@ -1,5 +1,7 @@
 
 #include "controller/all.hpp"
+#include "controller/ssl/config.hpp"
+
 #include "module/all.hpp"
 
 #include <mysqlx/xdevapi.h>
@@ -29,14 +31,18 @@ int main(int argc, char **argv) {
   auto ipAddress = module::getIpAddr(argv[1]);
   auto port = argv[2];
 
+  auto apiUri = module::buildUri("http", ipAddress, port);
+
   auto dbUser = std::getenv("DB_USER");
   auto dbHost = std::getenv("DB_HOST");
   auto dbName = std::getenv("DB_NAME");
   auto dbPassword = std::getenv("DB_PASSWORD");
 
-  auto apiUri = module::buildUri("http", ipAddress, port);
   auto dbUri = module::buildUri("mysqlx", dbHost, "",
                                 std::string(dbUser) + ":" + dbPassword, dbName);
+
+  auto connection = chat::module::Connection::getInstance(
+      mysqlx::ClientSettings(dbUri.to_string()));
 
   auto logFile = std::getenv("LOG_FILE");
 
@@ -45,27 +51,31 @@ int main(int argc, char **argv) {
       std::unique_ptr<spdlog::sinks::sink>(
           new spdlog::sinks::simple_file_sink_st(logFile, true)));
 
-  auto connection = chat::module::Connection::getInstance(
-      mysqlx::ClientSettings(dbUri.to_string()));
+  auto sslCrtPath = std::getenv("CRT_PATH");
+  auto sslKeyPath = std::getenv("KEY_PATH");
+  auto sslDhPath = std::getenv("DH_PATH");
+
+  std::shared_ptr<web::http::experimental::listener::http_listener_config>
+      config = controller::ssl::configSSL(sslKeyPath, sslCrtPath, sslDhPath);
 
   serverLogger->info(fmt::v9::format("apiUri : {}", apiUri.to_string()));
 
   try {
     auto companyController = controller::CompanyController::getInstance(
-        apiUri, serverLogger, connection);
+        apiUri, serverLogger, connection, config);
     auto authController = controller::AuthController::getInstance(
-        apiUri, serverLogger, connection);
+        apiUri, serverLogger, connection, config);
     auto userController = controller::UserController::getInstance(
-        apiUri, serverLogger, connection);
+        apiUri, serverLogger, connection, config);
 
     auto roomController = controller::RoomController::getInstance(
-        apiUri, serverLogger, connection);
+        apiUri, serverLogger, connection, config);
 
     auto participantController = controller::ParticipantController::getInstance(
-        apiUri, serverLogger, connection);
+        apiUri, serverLogger, connection, config);
 
     auto invitationController = controller::InvitationController::getInstance(
-        apiUri, serverLogger, connection);
+        apiUri, serverLogger, connection, config);
 
     auto companyThread =
         std::thread(&controller::CompanyController::listen,
