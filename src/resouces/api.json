@@ -24,13 +24,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/company/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/company/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -103,13 +103,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/company/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/company/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -182,13 +182,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/auth/login?type=company",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/auth/login?type=company",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -273,13 +273,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/auth/login?type=user",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/auth/login?type=user",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -364,13 +364,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/auth/logout",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/auth/logout",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -443,13 +443,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/invitations?type=request",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/invitations?type=request",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -532,13 +532,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/invitations?type=register",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/invitations?type=register",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -572,13 +572,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/participants?room=1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/participants?room=1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -664,13 +664,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/participants/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/participants/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -743,13 +743,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/participants?room=1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/participants?room=1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -832,13 +832,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/participants/2?room=1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/participants/2?room=1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -926,13 +926,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/rooms",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/rooms",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1006,13 +1006,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/rooms/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/rooms/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1085,13 +1085,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/rooms/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/rooms/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1164,13 +1164,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/rooms/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/rooms/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1243,13 +1243,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/rooms",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/rooms",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1323,13 +1323,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/users?company=1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/users?company=1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1415,13 +1415,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/users/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/users/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1494,13 +1494,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/users/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/users/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1573,13 +1573,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/users",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/users",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
@@ -1650,13 +1650,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.64.190.215:9000/users/1",
-					"protocol": "http",
+					"raw": "https://34.64.114.124:9000/users/1",
+					"protocol": "https",
 					"host": [
 						"34",
 						"64",
-						"190",
-						"215"
+						"114",
+						"124"
 					],
 					"port": "9000",
 					"path": [
