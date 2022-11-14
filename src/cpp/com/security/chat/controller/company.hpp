@@ -32,23 +32,23 @@ namespace chat::controller {
 class CompanyController : public BaseController {
 public:
   static std::shared_ptr<CompanyController>
-  getInstance(web::uri baseUri, L serverLogger, CN conn) {
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG &config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
-      instance =
-          std::make_shared<CompanyController>(baseUri, serverLogger, conn);
+      instance = std::make_shared<CompanyController>(baseUri, serverLogger,
+                                                     conn, config);
     }
     return instance;
   }
-  CompanyController(web::uri baseUri, L serverLogger, CN conn)
-      : BaseController(baseUri, serverLogger, conn),
+  CompanyController(web::uri baseUri, L serverLogger, CN conn, CONFIG &config)
+      : BaseController(baseUri, serverLogger, conn, config),
         companyService(
             service::CompanyService::getInstance(serverLogger, conn)) {
     web::uri_builder builder{baseUri};
     builder.set_path("/company");
     this->listenUri = builder.to_uri();
-    this->listener =
-        web::http::experimental::listener::http_listener{this->listenUri};
+    this->listener = web::http::experimental::listener::http_listener{
+        this->listenUri, config};
   }
   static void handleGet(web::http::http_request request) {
     // /company/id <- login한 모든 사용자는 접근 가능

@@ -15,5 +15,5 @@ export LOG_FILE=secure_chat.log
 
 ### If executable exists, running it & interconnecting with network-interface($1)
 if [ -f ./build/run.out ]; then
-    ./build/run.out $1 $2 &
+    gdb ./build/run.out
 fi

@@ -34,23 +34,24 @@ using namespace chat::module::exception;
 namespace chat::controller {
 class RoomController : public BaseController {
 public:
-  static std::shared_ptr<RoomController> getInstance(web::uri baseUri,
-                                                     L serverLogger, CN conn) {
+  static std::shared_ptr<RoomController>
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG &config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
-      instance = std::make_shared<RoomController>(baseUri, serverLogger, conn);
+      instance =
+          std::make_shared<RoomController>(baseUri, serverLogger, conn, config);
     }
     return instance;
   }
-  RoomController(web::uri baseUri, L serverLogger, CN conn)
-      : BaseController(baseUri, serverLogger, conn),
+  RoomController(web::uri baseUri, L serverLogger, CN conn, CONFIG &config)
+      : BaseController(baseUri, serverLogger, conn, config),
         roomService(service::RoomService::getInstance(serverLogger, conn)),
         participantService(
             service::ParticipantService::getInstance(serverLogger, conn)) {
     web::uri_builder builder{baseUri};
     this->listenUri = builder.set_path("/rooms").to_uri();
-    this->listener =
-        web::http::experimental::listener::http_listener(this->listenUri);
+    this->listener = web::http::experimental::listener::http_listener{
+        this->listenUri, config};
   }
 
   static void handleGet(web::http::http_request request) {

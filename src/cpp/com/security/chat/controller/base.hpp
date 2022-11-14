@@ -13,6 +13,7 @@
 
 #include <spdlog/logger.h>
 
+#include <cpprest/http_listener.h>
 #include <cpprest/json.h>
 #include <cpprest/uri.h>
 
@@ -28,6 +29,7 @@ public:
   using L = std::shared_ptr<spdlog::logger>;
   using CN = std::shared_ptr<module::Connection>;
   using SV = std::shared_ptr<service::BaseService>;
+  using CONFIG = web::http::experimental::listener::http_listener_config;
 
   virtual void listen() = 0;
 
@@ -36,6 +38,7 @@ protected:
   L serverLogger;
   SV authService;
   web::uri baseUri;
+  CONFIG config;
 
   static std::string bodyAt(const web::json::value &body, std::string key) {
     char val[1000]{};
@@ -51,7 +54,7 @@ protected:
       if (module::isNumber(rawSessionId) == false) {
         throw NotAuthorizedException(fmt::v9::format("not authorized"));
       }
-      
+
       uint64_t sessionId = std::stoull(rawSessionId);
       auto sessionToken = bodyAt(body, "session-token");
 
@@ -71,8 +74,8 @@ protected:
     }
   }
 
-  BaseController(web::uri baseUri, L serverLogger, CN conn)
-      : serverLogger(serverLogger), conn(conn),
+  BaseController(web::uri baseUri, L serverLogger, CN conn, CONFIG &config)
+      : serverLogger(serverLogger), conn(conn), config(config),
         authService(service::AuthService::getInstance(serverLogger, conn)) {}
   BaseController() = delete;
 };

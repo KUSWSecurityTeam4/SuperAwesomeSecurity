@@ -23,6 +23,7 @@ using namespace chat::module::exception;
 #include <cpprest/uri.h>
 #include <cpprest/uri_builder.h>
 
+#include <atomic>
 #include <exception>
 #include <functional>
 #include <memory>
@@ -32,25 +33,27 @@ using namespace chat::module::exception;
 namespace chat::controller {
 class AuthController : public BaseController {
 public:
-  static std::shared_ptr<AuthController> getInstance(web::uri baseUri,
-                                                     L serverLogger, CN conn) {
+  static std::shared_ptr<AuthController>
+  getInstance(web::uri baseUri, L serverLogger, CN conn, CONFIG &config) {
     std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
-      instance = std::make_shared<AuthController>(baseUri, serverLogger, conn);
+      instance =
+          std::make_shared<AuthController>(baseUri, serverLogger, conn, config);
     }
     return instance;
   }
-  AuthController(web::uri baseUri, L serverLogger, CN conn)
-      : BaseController(baseUri, serverLogger, conn) {
+  AuthController(web::uri baseUri, L serverLogger, CN conn, CONFIG &config)
+      : BaseController(baseUri, serverLogger, conn, config) {
     web::uri_builder baseBuilder{baseUri};
 
     this->loginUri = baseBuilder.set_path("/auth/login").to_uri();
-    this->loginListener =
-        web::http::experimental::listener::http_listener{this->loginUri};
+    this->loginListener = web::http::experimental::listener::http_listener{
+        this->loginUri, config};
 
+    auto logoutConfig = CONFIG{config};
     this->logoutUri = baseBuilder.set_path("/auth/logout").to_uri();
-    this->logoutListener =
-        web::http::experimental::listener::http_listener{this->logoutUri};
+    this->logoutListener = web::http::experimental::listener::http_listener{
+        this->logoutUri, config};
   }
 
   static void handleLogin(web::http::http_request request) {
@@ -271,7 +274,7 @@ public:
     try {
       loginListener.open()
           .then([this]() {
-            serverLogger->info(fmt::v9::format("AuthController : Listening {}",
+            serverLogger->info(fmt::v9::format("AuthController : Listening {} ",
                                                loginUri.to_string()));
           })
           .wait();
