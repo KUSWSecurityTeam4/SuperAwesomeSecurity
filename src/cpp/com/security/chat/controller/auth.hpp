@@ -46,13 +46,15 @@ public:
       : BaseController(baseUri, serverLogger, conn, config) {
     web::uri_builder baseBuilder{baseUri};
 
+    auto loginConfig = CONFIG{config};
     this->loginUri = baseBuilder.set_path("/auth/login").to_uri();
     this->loginListener = web::http::experimental::listener::http_listener{
-        this->loginUri, config};
+        this->loginUri, loginConfig};
 
+    auto logoutConfig = CONFIG{config};
     this->logoutUri = baseBuilder.set_path("/auth/logout").to_uri();
     this->logoutListener = web::http::experimental::listener::http_listener{
-        this->logoutUri, config};
+        this->logoutUri, logoutConfig};
   }
 
   static void handleLogin(web::http::http_request request) {
