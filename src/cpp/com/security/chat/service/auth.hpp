@@ -55,7 +55,9 @@ public:
       session->startTransaction();
 
       auto serverSession =
-          serverSessionRepository->findById(*session, sessionId);
+          removeIfExpired(*session, sessionId)
+              ? nullptr
+              : serverSessionRepository->findById(*session, sessionId);
       if (serverSession != nullptr) {
         session->commit();
         return serverSession;
@@ -85,9 +87,11 @@ public:
       session = std::make_unique<mysqlx::Session>(conn->client->getSession());
       session->startTransaction();
 
-      auto serverSession = std::dynamic_pointer_cast<dao::ServerSession>(
-          serverSessionRepository->findById(*session, sessionId));
-
+      auto serverSession =
+          removeIfExpired(*session, sessionId)
+              ? nullptr
+              : std::dynamic_pointer_cast<dao::ServerSession>(
+                    serverSessionRepository->findById(*session, sessionId));
       if (serverSession == nullptr) {
         throw NotFoundEntityException(fmt::v9::format(
             "AuthService : id={} not in ServerSession", sessionId));
@@ -116,9 +120,38 @@ public:
     }
   }
 
-  bool deleteIfExpired(uint64_t sessionId) {
-    throw NotImplementedException(
-        fmt::v9::format("AuthService : deleteIfExpired is not implemented"));
+  bool removeIfExpired(mysqlx::Session &session, uint64_t sessionId) {
+    try {
+      auto serverSession =
+          serverSessionRepository->findById(session, sessionId);
+      if (serverSession != nullptr) {
+        if (std::dynamic_pointer_cast<dao::ServerSession>(serverSession)
+                ->getExpiredAt() < module::getCurrentTime()) {
+          if (serverSessionRepository->remove(session, serverSession)) {
+            return true;
+          } else {
+            throw NotRemovedEntityException(fmt::v9::format(
+                "AuthService : id={} cannot be removed", sessionId));
+          }
+        } else {
+          // expired > current : Don't expire session!
+          return false;
+        }
+      } else {
+        throw NotFoundEntityException(fmt::v9::format(
+            "AuthService : id={} not in ServerSession", sessionId));
+      }
+    } catch (const NotRemovedEntityException &e) {
+      serverLogger->error(e.what());
+      throw;
+    } catch (const NotFoundEntityException &e) {
+      serverLogger->error(e.what());
+      throw;
+    } catch (const std::exception &e) {
+      auto msg = fmt::v9::format("AuthService : {}", e.what());
+      serverLogger->error(msg);
+      throw ServiceException(msg);
+    }
   }
 
   bool isCompany(E entity) {
@@ -157,6 +190,8 @@ public:
     /**
      * Multiple sessions of one entity are permitted
      */
+    constexpr time_t timeOffset = 1800l; // 1800secs
+
     auto session = std::unique_ptr<mysqlx::Session>(nullptr);
     try {
       session = std::make_unique<mysqlx::Session>(conn->client->getSession());
@@ -165,8 +200,10 @@ public:
       auto company = companyService->findByName(name);
       if (passwordService->compareWithCompanyPw(company->getId(), pw)) {
         auto token = module::secure::generateFixedLengthCode(tokenLength);
-
-        R serverSession = std::make_shared<dao::ServerSession>(company, token);
+        auto expiredAt =
+            static_cast<time_t>(module::getCurrentTime() + timeOffset);
+        R serverSession = std::make_shared<dao::ServerSession>(
+            company, token, module::convertToLocalTimeTM(expiredAt));
         serverSession = serverSessionRepository->save(*session, serverSession);
 
         if (serverSession != nullptr) {
@@ -200,6 +237,8 @@ public:
     /**
      * Multiple sessions of one entity are permitted
      */
+    constexpr time_t timeOffset = 1800l;
+
     auto session = std::unique_ptr<mysqlx::Session>(nullptr);
     try {
       session = std::make_unique<mysqlx::Session>(conn->client->getSession());
@@ -208,8 +247,11 @@ public:
       auto user = userService->findByEmail(email);
       if (passwordService->compareWithUserPw(user->getId(), pw)) {
         auto token = module::secure::generateFixedLengthCode(tokenLength);
+        auto expiredAt =
+            static_cast<time_t>(module::getCurrentTime() + timeOffset);
 
-        R serverSession = std::make_shared<dao::ServerSession>(user, token);
+        R serverSession = std::make_shared<dao::ServerSession>(
+            user, token, module::convertToLocalTimeTM(expiredAt));
         serverSession = serverSessionRepository->save(*session, serverSession);
         if (serverSession != nullptr) {
           session->commit();

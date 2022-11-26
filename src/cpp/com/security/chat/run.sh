@@ -3,7 +3,7 @@
 export TZ=/usr/share/zoneinfo/Asia/Seoul
 
 export DB_NAME=chat
-export DB_HOST=34.64.190.215
+export DB_HOST=172.17.0.2
 export DB_USER=security
 export DB_PASSWORD=1123
 
