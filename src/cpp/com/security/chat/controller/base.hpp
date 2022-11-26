@@ -41,10 +41,8 @@ protected:
   CONFIG config;
 
   static std::string bodyAt(const web::json::value &body, std::string key) {
-    char val[1000]{};
-    auto rawVal = module::trim(body.at(key).serialize(), '"');
-    strcpy(val, rawVal.c_str());
-    return val;
+    auto value = module::trim(body.at(key).serialize(), '"');
+    return value;
   }
 
   E authenticateAccess(web::json::value body) {
