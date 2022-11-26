@@ -35,15 +35,15 @@ int main(int argc, char **argv) {
 
   auto apiUri = module::buildUri("https", ipAddress, port);
 
-  std::ifstream ifs;
+  std::ifstream ifs{"resources/secret/config.json"};
   auto config = web::json::value::object();
-  ifs.open("resources/secret/config.json");
-  if (ifs.is_open()) {
-    ifs >> config;
-  } else {
+
+  if (ifs.fail()) {
     fprintf(stderr, "\n\nSecret Config File Not Opened\n\n");
     exit(1);
   }
+  ifs >> config;
+
   if (!config.has_field("timezone")) {
     fprintf(stderr, "\n\nTimezone Not Exist\n\n");
     exit(1);
