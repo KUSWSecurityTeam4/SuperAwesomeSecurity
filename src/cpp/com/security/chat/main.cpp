@@ -44,6 +44,13 @@ int main(int argc, char **argv) {
     fprintf(stderr, "\n\nSecret Config File Not Opened\n\n");
     exit(1);
   }
+  if (!config.has_field("timezone")) {
+    fprintf(stderr, "\n\nTimezone Not Exist\n\n");
+    exit(1);
+  }
+  const auto tz = config.at("timezone").serialize();
+  setenv("TZ", tz.c_str(), 1);
+
   if (!config.has_field("database")) {
     fprintf(stderr, "\n\nDatabase Config Not Exist\n\n");
   }
