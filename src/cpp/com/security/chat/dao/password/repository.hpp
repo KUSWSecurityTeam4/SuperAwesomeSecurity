@@ -21,6 +21,7 @@ namespace chat::dao {
 class PasswordRepository : public BaseRepository {
 public:
   static std::shared_ptr<PasswordRepository> getInstance(L repoLogger) {
+    std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
       instance = std::make_shared<PasswordRepository>(repoLogger);
     }
@@ -194,8 +195,10 @@ public:
 
 private:
   static std::shared_ptr<PasswordRepository> instance;
+  static std::mutex createMutex;
   PasswordRepository() = delete;
 };
 
 std::shared_ptr<PasswordRepository> PasswordRepository::instance = nullptr;
+std::mutex PasswordRepository::createMutex{};
 } // namespace chat::dao

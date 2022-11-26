@@ -26,6 +26,7 @@ public:
   using V = std::shared_ptr<ServerSession>;
 
   static std::shared_ptr<ServerSessionRepository> getInstance(L repoLogger) {
+    std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
       instance = std::make_shared<ServerSessionRepository>(repoLogger);
     }
@@ -112,11 +113,13 @@ public:
 
 private:
   static std::shared_ptr<ServerSessionRepository> instance;
+  static std::mutex createMutex;
+  ServerSessionRepository() = delete;
 
   std::unordered_map<K, V> db;
-  ServerSessionRepository() = delete;
 };
 
 std::shared_ptr<ServerSessionRepository> ServerSessionRepository::instance =
     nullptr;
+std::mutex ServerSessionRepository::createMutex{};
 } // namespace chat::dao

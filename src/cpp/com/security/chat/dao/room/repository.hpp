@@ -24,6 +24,7 @@ namespace chat::dao {
 class RoomRepository : public BaseRepository {
 public:
   static std::shared_ptr<RoomRepository> getInstance(L repoLogger) {
+    std::lock_guard<std::mutex> lock(createMutex);
     if (instance == nullptr) {
       instance = std::make_shared<RoomRepository>(repoLogger);
     }
@@ -100,6 +101,7 @@ public:
 
 private:
   static std::shared_ptr<RoomRepository> instance;
+  static std::mutex createMutex;
   RoomRepository() = delete;
 
   R findBy(mysqlx::Session &session, std::string condition) {
@@ -168,4 +170,5 @@ private:
 };
 
 std::shared_ptr<RoomRepository> RoomRepository::instance = nullptr;
+std::mutex RoomRepository::createMutex{};
 } // namespace chat::dao
