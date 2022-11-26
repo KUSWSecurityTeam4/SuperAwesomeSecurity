@@ -1,6 +1,5 @@
 
 #include "controller/all.hpp"
-#include "controller/ssl/config.hpp"
 
 #include "module/all.hpp"
 
@@ -10,11 +9,13 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/file_sinks.h>
 
+#include <cpprest/json.h>
 #include <cpprest/uri.h>
 
 #include <cstdio>
 #include <cstdlib>
 #include <exception>
+#include <fstream>
 #include <memory>
 #include <string>
 #include <thread>
@@ -23,8 +24,9 @@ using namespace chat;
 
 int main(int argc, char **argv) {
   if (argc != 3) {
-    fprintf(stderr, "Run with a specific network interface & port. example) "
-                    "./run.out ens4 9000\n");
+    fprintf(stderr,
+            "\n\nRun with a specific network interface & port. example) "
+            "./run.out ens4 9000\n\n");
     exit(1);
   }
 
@@ -33,10 +35,28 @@ int main(int argc, char **argv) {
 
   auto apiUri = module::buildUri("https", ipAddress, port);
 
-  auto dbUser = std::getenv("DB_USER");
-  auto dbHost = std::getenv("DB_HOST");
-  auto dbName = std::getenv("DB_NAME");
-  auto dbPassword = std::getenv("DB_PASSWORD");
+  std::ifstream ifs;
+  auto config = web::json::value::object();
+  ifs.open("resources/secret/config.json");
+  if (ifs.is_open()) {
+    ifs >> config;
+  } else {
+    fprintf(stderr, "\n\nSecret Config File Not Opened\n\n");
+    exit(1);
+  }
+  if (!config.has_field("database")) {
+    fprintf(stderr, "\n\nDatabase Config Not Exist\n\n");
+  }
+  const auto dbConfig = config.at("database");
+  if (!dbConfig.has_field("name") || !dbConfig.has_field("host") ||
+      !dbConfig.has_field("user") || !dbConfig.has_field("password")) {
+    fprintf(stderr, "\n\nDatabase Field Not Exist\n\n");
+    exit(1);
+  }
+  const auto dbName = dbConfig.at("name").serialize();
+  const auto dbHost = dbConfig.at("host").serialize();
+  const auto dbUser = dbConfig.at("user").serialize();
+  const auto dbPassword = dbConfig.at("password").serialize();
 
   auto dbUri = module::buildUri("mysqlx", dbHost, "",
                                 std::string(dbUser) + ":" + dbPassword, dbName);
@@ -44,37 +64,52 @@ int main(int argc, char **argv) {
   auto connection = chat::module::Connection::getInstance(
       mysqlx::ClientSettings(dbUri.to_string()));
 
-  auto logFile = std::getenv("LOG_FILE");
+  if (!config.has_field("log")) {
+    fprintf(stderr, "\n\nLog Field Not Exist\n\n");
+    exit(1);
+  }
+  const auto logFile = config.at("log").serialize();
 
   auto serverLogger = std::make_shared<spdlog::logger>(
       "SECURE_CHAT_SERVER_LOGGER",
       std::unique_ptr<spdlog::sinks::sink>(
           new spdlog::sinks::simple_file_sink_st(logFile, true)));
 
-  auto sslCrtPath = std::getenv("CRT_PATH");
-  auto sslKeyPath = std::getenv("KEY_PATH");
-  auto sslDhPath = std::getenv("DH_PATH");
+  if (!config.has_field("ssl")) {
+    fprintf(stderr, "\n\nSsl Config Not Exist\n\n");
+    exit(1);
+  }
+  const auto sslConfig = config.at("ssl");
 
-  auto &&config = controller::ssl::configSSL(sslKeyPath, sslCrtPath, sslDhPath);
+  if (!sslConfig.has_field("crt") || !sslConfig.has_field("key") ||
+      !sslConfig.has_field("pem")) {
+    fprintf(stderr, "\n\nSsl Field Not Exist\n\n");
+    exit(1);
+  }
+  const auto sslCrtPath = sslConfig.at("crt").serialize();
+  const auto sslKeyPath = sslConfig.at("key").serialize();
+  const auto sslDhPath = sslConfig.at("pem").serialize();
+
+  auto &&ssl = module::secure::configSSL(sslKeyPath, sslCrtPath, sslDhPath);
 
   serverLogger->info(fmt::v9::format("apiUri : {}", apiUri.to_string()));
 
   try {
     auto companyController = controller::CompanyController::getInstance(
-        apiUri, serverLogger, connection, config);
+        apiUri, serverLogger, connection, ssl);
     auto authController = controller::AuthController::getInstance(
-        apiUri, serverLogger, connection, config);
+        apiUri, serverLogger, connection, ssl);
     auto userController = controller::UserController::getInstance(
-        apiUri, serverLogger, connection, config);
+        apiUri, serverLogger, connection, ssl);
 
     auto roomController = controller::RoomController::getInstance(
-        apiUri, serverLogger, connection, config);
+        apiUri, serverLogger, connection, ssl);
 
     auto participantController = controller::ParticipantController::getInstance(
-        apiUri, serverLogger, connection, config);
+        apiUri, serverLogger, connection, ssl);
 
     auto invitationController = controller::InvitationController::getInstance(
-        apiUri, serverLogger, connection, config);
+        apiUri, serverLogger, connection, ssl);
 
     auto companyThread =
         std::thread(&controller::CompanyController::listen,
@@ -104,7 +139,7 @@ int main(int argc, char **argv) {
                         invitationController));
 
     companyThread.join();
-    // authThread.join();
+    authThread.join();
     userThread.join();
     roomThread.join();
     participantThread.join();

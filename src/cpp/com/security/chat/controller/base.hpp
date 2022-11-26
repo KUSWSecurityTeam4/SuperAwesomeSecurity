@@ -4,9 +4,8 @@
 
 #include "../dto/response.hpp"
 
-#include "../module/common.hpp"
-#include "../module/connection.hpp"
-#include "../module/exception.hpp"
+#include "../module/all.hpp"
+using namespace chat::module::exception;
 
 #include "../service/auth.hpp"
 #include "../service/base.hpp"
