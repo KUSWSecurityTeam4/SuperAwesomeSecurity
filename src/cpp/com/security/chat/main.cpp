@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
   auto port = argv[2];
 
   auto apiUri = module::buildUri("https", ipAddress, port);
-  std::system("pwd");
+
   std::ifstream ifs{"resources/secret/config.json"};
   auto config = web::json::value::object();
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "\n\nTimezone Not Exist\n\n");
     exit(1);
   }
-  const auto tz = config.at("timezone").serialize();
+  const auto tz = module::trim(config.at("timezone").serialize());
   setenv("TZ", tz.c_str(), 1);
 
   if (!config.has_field("database")) {
@@ -61,10 +61,10 @@ int main(int argc, char **argv) {
     fprintf(stderr, "\n\nDatabase Field Not Exist\n\n");
     exit(1);
   }
-  const auto dbName = dbConfig.at("name").serialize();
-  const auto dbHost = dbConfig.at("host").serialize();
-  const auto dbUser = dbConfig.at("user").serialize();
-  const auto dbPassword = dbConfig.at("password").serialize();
+  const auto dbName = module::trim(dbConfig.at("name").serialize());
+  const auto dbHost = module::trim(dbConfig.at("host").serialize());
+  const auto dbUser = module::trim(dbConfig.at("user").serialize());
+  const auto dbPassword = module::trim(dbConfig.at("password").serialize());
 
   auto dbUri = module::buildUri("mysqlx", dbHost, "",
                                 std::string(dbUser) + ":" + dbPassword, dbName);
@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "\n\nLog Field Not Exist\n\n");
     exit(1);
   }
-  const auto logFile = config.at("log").serialize();
+  const auto logFile = module::trim(config.at("log").serialize());
 
   auto serverLogger = std::make_shared<spdlog::logger>(
       "SECURE_CHAT_SERVER_LOGGER",
@@ -94,9 +94,9 @@ int main(int argc, char **argv) {
     fprintf(stderr, "\n\nSsl Field Not Exist\n\n");
     exit(1);
   }
-  const auto sslCrtPath = sslConfig.at("crt").serialize();
-  const auto sslKeyPath = sslConfig.at("key").serialize();
-  const auto sslDhPath = sslConfig.at("pem").serialize();
+  const auto sslCrtPath = module::trim(sslConfig.at("crt").serialize());
+  const auto sslKeyPath = module::trim(sslConfig.at("key").serialize());
+  const auto sslDhPath = module::trim(sslConfig.at("pem").serialize());
 
   auto &&ssl = module::secure::configSSL(sslKeyPath, sslCrtPath, sslDhPath);
 
