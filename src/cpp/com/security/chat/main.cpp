@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
   auto port = argv[2];
 
   auto apiUri = module::buildUri("https", ipAddress, port);
-
+  std::system("pwd");
   std::ifstream ifs{"resources/secret/config.json"};
   auto config = web::json::value::object();
 
@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
   ifs >> config;
+  ifs.close();
 
   if (!config.has_field("timezone")) {
     fprintf(stderr, "\n\nTimezone Not Exist\n\n");
