@@ -131,7 +131,7 @@ private:
                       getUnixTimestampFormatter("last_modified_at"));
       auto result = tableSelect.where(condition).execute();
 
-      if (result.count() != 1) {
+      if (result.count() > 1) {
         const auto msg =
             fmt::v9::format("RoomRepository : more than one rows are selected");
         throw EntityException(msg);

@@ -47,7 +47,7 @@ public:
       const auto condition = fmt::v9::format("user_id={}", userId);
       auto result = tableSelect.where(condition).execute();
 
-      if (result.count() != 1) {
+      if (result.count() > 1) {
         const auto msg = fmt::v9::format(
             "PasswordRepository : more than one rows are selected");
         throw EntityException(msg);
@@ -80,7 +80,7 @@ public:
       const auto condition = fmt::v9::format("company_id={}", companyId);
       auto result = tableSelect.where(condition).execute();
 
-      if (result.count() != 1) {
+      if (result.count() > 1) {
         const auto msg = fmt::v9::format(
             "PasswordRepository : more than one rows are selected");
         throw EntityException(msg);
