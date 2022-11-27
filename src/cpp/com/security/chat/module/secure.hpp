@@ -8,9 +8,9 @@ using namespace chat::module::exception;
 #include <algorithm>
 #include <cctype>
 #include <functional>
-#include <iostream>
 #include <limits>
 #include <random>
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -24,7 +24,6 @@ std::string hash(std::string password, std::string salt) {
   for (auto i = 0; i < pepper; ++i) {
     hashedPw = std::to_string(hash(hashedPw + salt));
   }
-  std::cout << "pw : " << password << ", hash : " << hashedPw << std::endl;
   return hashedPw;
 }
 bool compare(std::string receivedPw, std::string storedPw, std::string salt) {
@@ -35,9 +34,6 @@ bool compare(std::string receivedPw, std::string storedPw, std::string salt) {
   for (auto i = 0; i < pepper; ++i) {
     hashedReceivedPw = std::to_string(hash(hashedReceivedPw + salt));
   }
-  std::cout << "recv : " << receivedPw << ", hash : " << hashedReceivedPw
-            << ", stored : " << storedPw << std::endl;
-
   return hashedReceivedPw == storedPw;
 }
 
@@ -86,9 +82,18 @@ decltype(auto) configSSL(std::string keyPath, std::string crtPath,
 }
 
 // sql injection을 방지하기 위해, userInput을 검증한다
-bool verifyUserInput(std::string input) {
+bool verifyUserInput(const std::string &input) {
   return std::count_if(input.begin(), input.end(), [](unsigned char c) {
            return std::isalpha(c) || std::isdigit(c);
          }) == input.size();
+}
+
+bool verifyEmail(const std::string &email) {
+  // Regular expression definition
+  const std::regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+
+  // Match the string pattern
+  // with regular expression
+  return std::regex_match(email, pattern);
 }
 } // namespace chat::module::secure

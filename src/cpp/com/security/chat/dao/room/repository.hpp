@@ -38,7 +38,14 @@ public:
   }
 
   R findByName(mysqlx::Session &session, std::string name) {
-    return findBy(session, fmt::v9::format("name='{}'", name));
+    if (module::secure::verifyUserInput(name)) {
+      return findBy(session, fmt::v9::format("name='{}'", name));
+    } else {
+      const auto msg =
+          fmt::v9::format("RoomRepository: name={} is invalid format", name);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
   std::list<R> findAll(mysqlx::Session &session) {
     return findAllBy(session, fmt::v9::format("true"));
@@ -47,35 +54,47 @@ public:
   R save(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
-      auto room = std::dynamic_pointer_cast<Room>(entity);
-      time_t deletedAt = room->getDeletedAt();
-      auto query = fmt::v9::format(
-          "INSERT INTO chat_room(name, deleted_at) VALUES('{}', '{}')",
-          room->getName(),
-          module::convertToLocalTimeString(room->getDeletedAt()));
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
-      return findByName(session, room->getName());
+      auto tableInsert =
+          getTable(session, tableName).insert("name", "deleted_at");
+      const auto room = std::dynamic_pointer_cast<Room>(entity);
+      if (!module::secure::verifyUserInput(room->getName())) {
+        const auto msg = fmt::v9::format(
+            "RoomRepository: name={} is invalid format", room->getName());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      const auto row =
+          mysqlx::Row(room->getName(),
+                      module::convertToLocalTimeString(room->getDeletedAt()));
+      const auto result = tableInsert.values(row).execute();
+      return findById(session, result.getAutoIncrementValue());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("RoomRepository: {}", e.what());
       repoLogger->error(msg);
       throw EntityException(msg);
     }
   }
+
   R update(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
-      auto room = std::dynamic_pointer_cast<Room>(entity);
-      auto query = fmt::v9::format(
-          "UPDATE chat_room SET name='{}', deleted_at='{}', "
-          "last_modified_at=NOW() WHERE room_id={}",
-          room->getName(),
-          module::convertToLocalTimeString(room->getDeletedAt()),
-          room->getId());
-
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
-
+      auto tableUpdate = getTable(session, tableName).update();
+      const auto room = std::dynamic_pointer_cast<Room>(entity);
+      if (!module::secure::verifyUserInput(room->getName())) {
+        const auto msg = fmt::v9::format(
+            "RoomRepository: name={} is invalid format", room->getName());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      const auto condition = fmt::v9::format("room_id={}", room->getId());
+      const auto result =
+          tableUpdate.set("name", room->getName())
+              .set("deleted_at",
+                   module::convertToLocalTimeString(room->getDeletedAt()))
+              .set("last_modified_at",
+                   module::convertToLocalTimeString(module::getCurrentTime()))
+              .where(condition)
+              .execute();
       return findById(session, room->getId());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("RoomRepository: {}", e.what());
@@ -86,11 +105,10 @@ public:
   bool remove(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
-      auto room = std::dynamic_pointer_cast<Room>(entity);
-      auto query = fmt::v9::format("DELETE FROM chat_room WHERE room_id={}",
-                                   room->getId());
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableRemove = getTable(session, tableName).remove();
+      const auto room = std::dynamic_pointer_cast<Room>(entity);
+      const auto condition = fmt::v9::format("room_id={}", room->getId());
+      const auto result = tableRemove.where(condition).execute();
       return true;
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("RoomRepository: {}", e.what());
@@ -106,16 +124,20 @@ private:
 
   R findBy(mysqlx::Session &session, std::string condition) {
     try {
-      auto query = fmt::v9::format(
-          "SELECT name, {}, room_id, {}, {} FROM "
-          "chat_room WHERE {}",
-          getUnixTimestampFormatter("deleted_at"),
-          getUnixTimestampFormatter("created_at"),
-          getUnixTimestampFormatter("last_modified_at"), condition);
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableSelect =
+          getTable(session, tableName)
+              .select("name", getUnixTimestampFormatter("deleted_at"),
+                      "room_id", getUnixTimestampFormatter("created_at"),
+                      getUnixTimestampFormatter("last_modified_at"));
+      auto result = tableSelect.where(condition).execute();
 
+      if (result.count() != 1) {
+        const auto msg =
+            fmt::v9::format("RoomRepository : more than one rows are selected");
+        throw EntityException(msg);
+      }
       auto row = result.fetchOne();
+
       if (row.isNull() != true) {
         auto entity =
             R(new Room(std::string(row.get(0)),
@@ -135,14 +157,12 @@ private:
 
   std::list<R> findAllBy(mysqlx::Session &session, std::string condition) {
     try {
-      auto query = fmt::v9::format(
-          "SELECT name, {}, room_id, {}, {} FROM "
-          "chat_room WHERE {}",
-          getUnixTimestampFormatter("deleted_at"),
-          getUnixTimestampFormatter("created_at"),
-          getUnixTimestampFormatter("last_modified_at"), condition);
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableSelect =
+          getTable(session, tableName)
+              .select("name", getUnixTimestampFormatter("deleted_at"),
+                      "room_id", getUnixTimestampFormatter("created_at"),
+                      getUnixTimestampFormatter("last_modified_at"));
+      auto result = tableSelect.where(condition).execute();
 
       auto rawList = result.fetchAll();
       auto filteredRawList = std::list<mysqlx::Row>{};

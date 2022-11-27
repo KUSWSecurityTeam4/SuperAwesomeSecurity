@@ -38,11 +38,25 @@ public:
   }
 
   std::list<R> findByName(mysqlx::Session &session, std::string name) {
-    return findAllBy(session, fmt::v9::format("name='{}'", name));
+    if (module::secure::verifyUserInput(name)) {
+      return findAllBy(session, fmt::v9::format("name='{}'", name));
+    } else {
+      const auto msg =
+          fmt::v9::format("UserRepository: name={} is invalid format", name);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
 
   R findByEmail(mysqlx::Session &session, std::string email) {
-    return findBy(session, fmt::v9::format("email='{}'", email));
+    if (module::secure::verifyEmail(email)) {
+      return findBy(session, fmt::v9::format("email='{}'", email));
+    } else {
+      const auto msg =
+          fmt::v9::format("UserRepository: email={} is invalid format", email);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
 
   std::list<R> findAllByCompanyId(mysqlx::Session &session,
@@ -51,30 +65,58 @@ public:
   }
 
   std::list<R> findAllByRole(mysqlx::Session &session, std::string role) {
-    return findAllBy(session, fmt::v9::format("role='{}'", role));
+    if (module::secure::verifyUserInput(role)) {
+      return findAllBy(session, fmt::v9::format("role='{}'", role));
+    } else {
+      const auto msg =
+          fmt::v9::format("UserRepository: role={} is invalid format", role);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
 
   std::list<R> findAllByRoleInCompany(mysqlx::Session &session,
                                       std::string role, uint64_t companyId) {
-    return findAllBy(session, fmt::v9::format("role='{}' AND company_id={}",
-                                              role, companyId));
+    if (module::secure::verifyUserInput(role)) {
+      return findAllBy(session, fmt::v9::format("role='{}' AND company_id={}",
+                                                role, companyId));
+    } else {
+      const auto msg =
+          fmt::v9::format("UserRepository: role={} is invalid format", role);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
 
   R save(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
+      auto tableInsert = getTable(session, tableName)
+                             .insert("company_id", "name", "role", "email");
       auto user = std::dynamic_pointer_cast<User>(entity);
-      auto query = fmt::v9::format(
-          "INSERT INTO chat_user(company_id, name, role, email) VALUES({}, "
-          "'{}', '{}', '{}')",
-          user->getCompanyId(), user->getName(), user->getRole(),
-          user->getEmail());
 
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
-
-      // Email is one of candidate keys
-      return findByEmail(session, user->getEmail());
+      if (!module::secure::verifyUserInput(user->getName())) {
+        const auto msg = fmt::v9::format(
+            "UserRepository: name={} is invalid format", user->getName());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      if (!module::secure::verifyUserInput(user->getRole())) {
+        const auto msg = fmt::v9::format(
+            "UserRepository: role={} is invalid format", user->getRole());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      if (!module::secure::verifyEmail(user->getEmail())) {
+        const auto msg = fmt::v9::format(
+            "UserRepository: email={} is invalid format", user->getEmail());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      const auto row = mysqlx::Row(user->getCompanyId(), user->getName(),
+                                   user->getRole(), user->getEmail());
+      const auto result = tableInsert.values(row).execute();
+      return findById(session, result.getAutoIncrementValue());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("UserRepository: {}", e.what());
       repoLogger->error(msg);
@@ -85,16 +127,37 @@ public:
   R update(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
-      auto user = std::dynamic_pointer_cast<User>(entity);
-      auto query =
-          fmt::v9::format("UPDATE chat_user SET company_id={}, name='{}', "
-                          "role='{}', email='{}', "
-                          "last_modified_at=NOW() WHERE user_id={}",
-                          user->getCompanyId(), user->getName(),
-                          user->getRole(), user->getEmail(), user->getId());
+      auto tableUpdate = getTable(session, tableName).update();
+      const auto user = std::dynamic_pointer_cast<User>(entity);
 
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      if (!module::secure::verifyUserInput(user->getName())) {
+        const auto msg = fmt::v9::format(
+            "UserRepository: name={} is invalid format", user->getName());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      if (!module::secure::verifyUserInput(user->getRole())) {
+        const auto msg = fmt::v9::format(
+            "UserRepository: role={} is invalid format", user->getRole());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      if (!module::secure::verifyEmail(user->getEmail())) {
+        const auto msg = fmt::v9::format(
+            "UserRepository: email={} is invalid format", user->getEmail());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      const auto condition = fmt::v9::format("user_id={}", user->getId());
+      const auto result =
+          tableUpdate.set("company_id", user->getCompanyId())
+              .set("name", user->getName())
+              .set("role", user->getRole())
+              .set("email", user->getEmail())
+              .set("last_modified_at",
+                   module::convertToLocalTimeString(module::getCurrentTime()))
+              .where(condition)
+              .execute();
       return findById(session, user->getId());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("UserRepository: {}", e.what());
@@ -105,11 +168,10 @@ public:
   bool remove(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
-      auto user = std::dynamic_pointer_cast<User>(entity);
-      auto query = fmt::v9::format("DELETE FROM chat_user WHERE user_id={}",
-                                   user->getId());
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableRemove = getTable(session, tableName).remove();
+      const auto user = std::dynamic_pointer_cast<User>(entity);
+      const auto condition = fmt::v9::format("user_id={}", user->getId());
+      const auto result = tableRemove.where(condition).execute();
       return true;
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("UserRepository: {}", e.what());
@@ -125,14 +187,20 @@ private:
 
   R findBy(mysqlx::Session &session, std::string condition) {
     try {
-      auto query = fmt::v9::format(
-          "SELECT company_id, name, role, email, user_id, {}, {} FROM "
-          "chat_user WHERE {}",
-          getUnixTimestampFormatter("created_at"),
-          getUnixTimestampFormatter("last_modified_at"), condition);
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableSelect =
+          getTable(session, tableName)
+              .select("company_id", "name", "role", "email", "user_id",
+                      getUnixTimestampFormatter("created_at"),
+                      getUnixTimestampFormatter("last_modified_at"));
+      auto result = tableSelect.where(condition).execute();
+
+      if (result.count() != 1) {
+        const auto msg =
+            fmt::v9::format("UserRepository : more than one rows are selected");
+        throw EntityException(msg);
+      }
       auto row = result.fetchOne();
+
       if (row.isNull() != true) {
         auto entity =
             R(new User(uint64_t(row.get(0)), std::string(row.get(1)),
@@ -152,13 +220,12 @@ private:
 
   std::list<R> findAllBy(mysqlx::Session &session, std::string condition) {
     try {
-      auto query = fmt::v9::format(
-          "SELECT company_id, name, role, email, user_id, {}, {} FROM "
-          "chat_user WHERE {}",
-          getUnixTimestampFormatter("created_at"),
-          getUnixTimestampFormatter("last_modified_at"), condition);
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableSelect =
+          getTable(session, tableName)
+              .select("company_id", "name", "role", "email", "user_id",
+                      getUnixTimestampFormatter("created_at"),
+                      getUnixTimestampFormatter("last_modified_at"));
+      auto result = tableSelect.where(condition).execute();
 
       auto rawList = result.fetchAll();
       auto filteredRawList = std::list<mysqlx::Row>{};

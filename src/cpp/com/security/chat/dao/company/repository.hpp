@@ -97,7 +97,7 @@ public:
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
       auto tableRemove = getTable(session, tableName).remove();
-      auto company = std::dynamic_pointer_cast<Company>(entity);
+      const auto company = std::dynamic_pointer_cast<Company>(entity);
       const auto condition = fmt::v9::format("company_id={}", company->getId());
       const auto result = tableRemove.where(condition).execute();
       return true;

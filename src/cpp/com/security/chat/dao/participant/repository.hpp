@@ -50,43 +50,64 @@ public:
 
   std::list<R> findAllByRoleInRoom(mysqlx::Session &session, std::string role,
                                    uint64_t roomId) {
-    return findAllBy(session,
-                     fmt::v9::format("role='{}' AND room_id={}", role, roomId));
+    if (module::secure::verifyUserInput(role)) {
+      return findAllBy(
+          session, fmt::v9::format("role='{}' AND room_id={}", role, roomId));
+    } else {
+      const auto msg = fmt::v9::format(
+          "ParticipantRepository: role={} is invalid format", role);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
 
   R save(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
+      auto tableInsert =
+          getTable(session, tableName).insert("room_id", "user_id", "role");
       auto participant = std::dynamic_pointer_cast<Participant>(entity);
-      auto query =
-          fmt::v9::format("INSERT INTO room_participant(room_id, user_id, "
-                          "role) VALUES({}, {}, '{}')",
-                          participant->getRoomId(), participant->getUserId(),
-                          participant->getRole());
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
-      return findBy(session,
-                    fmt::v9::format("room_id={} AND user_id={} AND role='{}'",
-                                    participant->getRoomId(),
-                                    participant->getUserId(),
-                                    participant->getRole()));
+      if (!module::secure::verifyUserInput(participant->getRole())) {
+        const auto msg =
+            fmt::v9::format("ParticipantRepository: role={} is invalid format",
+                            participant->getRole());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      const auto row =
+          mysqlx::Row(participant->getRoomId(), participant->getUserId(),
+                      participant->getRole());
+      const auto result = tableInsert.values(row).execute();
+      return findById(session, result.getAutoIncrementValue());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("ParticipantRepository: {}", e.what());
       repoLogger->error(msg);
       throw EntityException(msg);
     }
   }
+
   R update(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
+      auto tableUpdate = getTable(session, tableName).update();
       auto participant = std::dynamic_pointer_cast<Participant>(entity);
-      auto query = fmt::v9::format(
-          "UPDATE room_participant SET room_id={}, user_id={}, "
-          "role='{}', last_modified_at=NOW() WHERE participant_id={}",
-          participant->getRoomId(), participant->getUserId(),
-          participant->getRole(), participant->getId());
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      if (!module::secure::verifyUserInput(participant->getRole())) {
+        const auto msg =
+            fmt::v9::format("ParticipantRepository: role={} is invalid format",
+                            participant->getRole());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
+      const auto condition =
+          fmt::v9::format("participant_id={}", participant->getId());
+      const auto result =
+          tableUpdate.set("room_id", participant->getRoomId())
+              .set("user_id", participant->getUserId())
+              .set("role", participant->getRole())
+              .set("last_modified_at",
+                   module::convertToLocalTimeString(module::getCurrentTime()))
+              .where(condition)
+              .execute();
       return findById(session, participant->getId());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("ParticipantRepository: {}", e.what());
@@ -98,12 +119,11 @@ public:
   bool remove(mysqlx::Session &session, E entity) override {
     std::lock_guard<std::mutex> lock(sessionMutex);
     try {
+      auto tableRemove = getTable(session, tableName).remove();
       auto participant = std::dynamic_pointer_cast<Participant>(entity);
-      auto query = fmt::v9::format(
-          "DELETE FROM room_participant WHERE participant_id={}",
-          participant->getId());
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      const auto condition =
+          fmt::v9::format("participant_id={}", participant->getId());
+      const auto result = tableRemove.where(condition).execute();
       return true;
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("ParticipantRepository: {}", e.what());
@@ -119,15 +139,20 @@ private:
 
   R findBy(mysqlx::Session &session, std::string condition) {
     try {
-      auto query = fmt::v9::format(
-          "SELECT room_id, user_id, role, participant_id, {}, {} FROM "
-          "room_participant WHERE {}",
-          getUnixTimestampFormatter("created_at"),
-          getUnixTimestampFormatter("last_modified_at"), condition);
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableSelect =
+          getTable(session, tableName)
+              .select("room_id", "user_id", "role", "participant_id",
+                      getUnixTimestampFormatter("created_at"),
+                      getUnixTimestampFormatter("last_modified_at"));
+      auto result = tableSelect.where(condition).execute();
 
+      if (result.count() != 1) {
+        const auto msg = fmt::v9::format(
+            "ParticipantRepository : more than one rows are selected");
+        throw EntityException(msg);
+      }
       auto row = result.fetchOne();
+
       if (row.isNull() != true) {
         auto entity = R(new Participant(
             uint64_t(row.get(0)), uint64_t(row.get(1)), std::string(row.get(2)),
@@ -146,13 +171,12 @@ private:
 
   std::list<R> findAllBy(mysqlx::Session &session, std::string condition) {
     try {
-      auto query = fmt::v9::format(
-          "SELECT room_id, user_id, role, participant_id, {}, {} FROM "
-          "room_participant WHERE {}",
-          getUnixTimestampFormatter("created_at"),
-          getUnixTimestampFormatter("last_modified_at"), condition);
-      auto stmt = session.sql(query);
-      auto result = stmt.execute();
+      auto tableSelect =
+          getTable(session, tableName)
+              .select("room_id", "user_id", "role", "participant_id",
+                      getUnixTimestampFormatter("created_at"),
+                      getUnixTimestampFormatter("last_modified_at"));
+      auto result = tableSelect.where(condition).execute();
 
       auto rawList = result.fetchAll();
       auto filteredRawList = std::list<mysqlx::Row>{};
