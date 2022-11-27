@@ -79,10 +79,12 @@ public:
         throw EntityException(msg);
       }
       const auto condition = fmt::v9::format("company_id={}", company->getId());
-      const auto result = tableUpdate.set("name", company->getName())
-                              .set("last_modified_at", "expr(NOW())")
-                              .where(condition)
-                              .execute();
+      const auto result =
+          tableUpdate.set("name", company->getName())
+              .set("last_modified_at",
+                   module::convertToLocalTimeString(module::getCurrentTime()))
+              .where(condition)
+              .execute();
       return findById(session, company->getId());
     } catch (const std::exception &e) {
       auto msg = fmt::v9::format("CompanyRepository: {}", e.what());
