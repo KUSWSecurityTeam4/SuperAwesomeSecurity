@@ -6,6 +6,7 @@ using namespace chat::module::exception;
 #include <cpprest/http_listener.h>
 
 #include <algorithm>
+#include <cctype>
 #include <functional>
 #include <limits>
 #include <random>
@@ -77,5 +78,12 @@ decltype(auto) configSSL(std::string keyPath, std::string crtPath,
   config.set_timeout(utility::seconds(10));
 
   return config;
+}
+
+// sql injection을 방지하기 위해, userInput을 검증한다
+bool verifyUserInput(std::string input) {
+  return std::count_if(input.begin(), input.end(), [](unsigned char c) {
+           return std::isalpha(c) || std::isdigit(c);
+         }) == input.size();
 }
 } // namespace chat::module::secure

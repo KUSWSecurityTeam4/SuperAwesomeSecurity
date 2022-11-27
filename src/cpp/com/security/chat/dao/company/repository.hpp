@@ -32,7 +32,14 @@ public:
   CompanyRepository(L repoLogger) : BaseRepository(repoLogger, "company"){};
 
   R findByName(mysqlx::Session &session, std::string name) {
-    return findBy(session, fmt::v9::format("name='{}'", name));
+    if (module::secure::verifyUserInput(name)) {
+      return findBy(session, fmt::v9::format("name='{}'", name));
+    } else {
+      const auto msg =
+          fmt::v9::format("CompanyRepository: name={} is invalid format", name);
+      repoLogger->error(msg);
+      throw EntityException(msg);
+    }
   }
 
   R findById(mysqlx::Session &session, uint64_t id) override {
@@ -44,6 +51,12 @@ public:
     try {
       auto tableInsert = getTable(session, tableName).insert("name");
       const auto company = std::dynamic_pointer_cast<Company>(entity);
+      if (!module::secure::verifyUserInput(company->getName())) {
+        const auto msg = fmt::v9::format(
+            "CompanyRepository: name={} is invalid format", company->getName());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
       const auto row = mysqlx::Row(company->getName());
       const auto result = tableInsert.values(row).execute();
       return findById(session, result.getAutoIncrementValue());
@@ -59,6 +72,12 @@ public:
     try {
       auto tableUpdate = getTable(session, tableName).update();
       auto company = std::dynamic_pointer_cast<Company>(entity);
+      if (!module::secure::verifyUserInput(company->getName())) {
+        const auto msg = fmt::v9::format(
+            "CompanyRepository: name={} is invalid format", company->getName());
+        repoLogger->error(msg);
+        throw EntityException(msg);
+      }
       const auto condition = fmt::v9::format("company_id={}", company->getId());
       const auto result = tableUpdate.set("name", company->getName())
                               .set("last_modified_at", "expr(NOW())")
