@@ -190,6 +190,7 @@ public:
 
         std::dynamic_pointer_cast<dao::Password>(password)->setHashedPw(
             hashedPw);
+        std::dynamic_pointer_cast<dao::Password>(password)->setSalt(salt);
 
         password = std::dynamic_pointer_cast<dao::PasswordRepository>(
                        passwordRepository)
@@ -230,6 +231,7 @@ public:
 
         std::dynamic_pointer_cast<dao::Password>(password)->setHashedPw(
             hashedPw);
+        std::dynamic_pointer_cast<dao::Password>(password)->setSalt(salt);
 
         password = std::dynamic_pointer_cast<dao::PasswordRepository>(
                        passwordRepository)

@@ -2,6 +2,7 @@
 
 #include "./entity.hpp"
 
+#include <mysqlx/devapi/table_crud.h>
 #include <mysqlx/xdevapi.h>
 
 #include <fmt/core.h>
@@ -26,9 +27,11 @@ public:
 protected:
   std::mutex sessionMutex;
   L repoLogger;
+  std::string tableName;
 
-  BaseRepository(L repoLogger)
-      : repoLogger(repoLogger), sessionMutex(std::mutex()){};
+  BaseRepository(L repoLogger, std::string tableName)
+      : repoLogger(repoLogger), sessionMutex(std::mutex()),
+        tableName(tableName){};
   BaseRepository() = delete;
 
   static std::string getUnixTimestampFormatter(std::string time) {
@@ -36,6 +39,10 @@ protected:
   }
   static time_t convertToTimeT(mysqlx::Value value) {
     return time_t(uint32_t(value));
+  }
+
+  mysqlx::Table getTable(mysqlx::Session &session, const std::string name) {
+    return session.getDefaultSchema().getTable(name, true);
   }
 };
 } // namespace chat::dao

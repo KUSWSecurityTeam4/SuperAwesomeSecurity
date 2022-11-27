@@ -6,9 +6,11 @@ using namespace chat::module::exception;
 #include <cpprest/http_listener.h>
 
 #include <algorithm>
+#include <cctype>
 #include <functional>
 #include <limits>
 #include <random>
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -77,5 +79,21 @@ decltype(auto) configSSL(std::string keyPath, std::string crtPath,
   config.set_timeout(utility::seconds(10));
 
   return config;
+}
+
+// sql injection을 방지하기 위해, userInput을 검증한다
+bool verifyUserInput(const std::string &input) {
+  return std::count_if(input.begin(), input.end(), [](unsigned char c) {
+           return std::isalpha(c) || std::isdigit(c);
+         }) == input.size();
+}
+
+bool verifyEmail(const std::string &email) {
+  // Regular expression definition
+  const std::regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+
+  // Match the string pattern
+  // with regular expression
+  return std::regex_match(email, pattern);
 }
 } // namespace chat::module::secure

@@ -33,7 +33,8 @@ public:
     return instance;
   }
 
-  ServerSessionRepository(L repoLogger) : BaseRepository(repoLogger), db{} {};
+  ServerSessionRepository(L repoLogger)
+      : BaseRepository(repoLogger, "server_session"), db{} {};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
     try {

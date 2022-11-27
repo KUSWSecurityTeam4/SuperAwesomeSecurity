@@ -251,8 +251,9 @@ public:
       auto user = std::dynamic_pointer_cast<dao::User>(
           userRepository->findById(*session, userId));
       if (user != nullptr) {
-        if (std::dynamic_pointer_cast<dao::UserRepository>(userRepository)
-                ->findByEmail(*session, email) == nullptr) {
+        if ((std::dynamic_pointer_cast<dao::UserRepository>(userRepository)
+                 ->findByEmail(*session, email) == nullptr) ||
+            (user->getEmail() == email)) {
 
           user->setName(name);
           user->setRole(role);
