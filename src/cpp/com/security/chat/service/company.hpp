@@ -100,16 +100,20 @@ public:
     try {
       session = std::make_unique<mysqlx::Session>(conn->client->getSession());
       session->startTransaction();
-      auto company = companyRepository->findById(*session, companyId);
+      auto company = std::dynamic_pointer_cast<dao::Company>(
+          companyRepository->findById(*session, companyId));
       if (company != nullptr) {
-        if (std::dynamic_pointer_cast<dao::Company>(company)->getName() ==
-            companyName) {
+        auto other =
+            std::dynamic_pointer_cast<dao::CompanyRepository>(companyRepository)
+                ->findByName(*session, companyName);
+        if (other->getId() != company->getId()) {
           throw DuplicatedEntityException(fmt::v9::format(
               "CompanyService: name={} already in Company", companyName));
         } else {
           std::dynamic_pointer_cast<dao::Company>(company)->setName(
               companyName);
-          company = companyRepository->update(*session, company);
+          company = std::dynamic_pointer_cast<dao::Company>(
+              companyRepository->update(*session, company));
           if (company != nullptr) {
             session->commit();
             return company;

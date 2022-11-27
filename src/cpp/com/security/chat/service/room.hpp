@@ -267,12 +267,12 @@ public:
       auto room = std::dynamic_pointer_cast<dao::RoomRepository>(roomRepository)
                       ->findById(*session, roomId);
       if (room != nullptr) {
-        if (std::dynamic_pointer_cast<dao::RoomRepository>(roomRepository)
-                ->findByName(*session, name) == nullptr) {
-
+        auto other =
+            std::dynamic_pointer_cast<dao::RoomRepository>(roomRepository)
+                ->findByName(*session, name);
+        if (other->getId() == room->getId()) {
           std::dynamic_pointer_cast<dao::Room>(room)->setName(name);
           room = roomRepository->update(*session, room);
-
           if (room != nullptr) {
             session->commit();
             return room;
