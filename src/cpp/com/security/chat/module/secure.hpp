@@ -8,6 +8,7 @@ using namespace chat::module::exception;
 #include <algorithm>
 #include <cctype>
 #include <functional>
+#include <iostream>
 #include <limits>
 #include <random>
 #include <string>
@@ -23,6 +24,7 @@ std::string hash(std::string password, std::string salt) {
   for (auto i = 0; i < pepper; ++i) {
     hashedPw = std::to_string(hash(hashedPw + salt));
   }
+  std::cout << "pw : " << password << ", hash : " << hashedPw << std::endl;
   return hashedPw;
 }
 bool compare(std::string receivedPw, std::string storedPw, std::string salt) {
@@ -33,6 +35,9 @@ bool compare(std::string receivedPw, std::string storedPw, std::string salt) {
   for (auto i = 0; i < pepper; ++i) {
     hashedReceivedPw = std::to_string(hash(hashedReceivedPw + salt));
   }
+  std::cout << "recv : " << receivedPw << ", hash : " << hashedReceivedPw
+            << ", stored : " << storedPw << std::endl;
+
   return hashedReceivedPw == storedPw;
 }
 

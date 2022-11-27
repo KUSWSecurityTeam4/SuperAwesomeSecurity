@@ -42,11 +42,6 @@ protected:
   }
 
   mysqlx::Table getTable(mysqlx::Session &session, const std::string name) {
-    repoLogger->info(session.getDefaultSchemaName());
-    auto names = session.getDefaultSchema().getTableNames();
-    for (auto beg = names.begin(); beg != names.end(); ++beg) {
-      repoLogger->info(std::string(*beg));
-    }
     return session.getDefaultSchema().getTable(name, true);
   }
 };
