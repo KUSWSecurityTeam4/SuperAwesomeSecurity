@@ -31,7 +31,8 @@ public:
     return instance;
   }
 
-  ParticipantRepository(L repoLogger) : BaseRepository(repoLogger){};
+  ParticipantRepository(L repoLogger)
+      : BaseRepository(repoLogger, "room_participant"){};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
     return findBy(session, fmt::v9::format("participant_id={}", id));

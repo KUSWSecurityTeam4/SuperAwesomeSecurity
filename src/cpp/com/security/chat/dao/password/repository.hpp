@@ -28,7 +28,8 @@ public:
     return instance;
   }
 
-  PasswordRepository(L repoLogger) : BaseRepository(repoLogger){};
+  PasswordRepository(L repoLogger)
+      : BaseRepository(repoLogger, "chat_password"){};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
     auto msg = fmt::v9::format("PasswordRepository: findById not implemented");

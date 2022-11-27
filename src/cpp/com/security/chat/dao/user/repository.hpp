@@ -31,7 +31,7 @@ public:
     return instance;
   }
 
-  UserRepository(L repoLogger) : BaseRepository(repoLogger){};
+  UserRepository(L repoLogger) : BaseRepository(repoLogger, "chat_user"){};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
     return findBy(session, fmt::v9::format("user_id={}", id));

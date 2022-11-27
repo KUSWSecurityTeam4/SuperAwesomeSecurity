@@ -28,7 +28,8 @@ public:
     return instance;
   }
 
-  InvitationRepository(L repoLogger) : BaseRepository(repoLogger){};
+  InvitationRepository(L repoLogger)
+      : BaseRepository(repoLogger, "invitation"){};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
     return findBy(session, fmt::v9::format("invitation_id={}", id));

@@ -31,7 +31,7 @@ public:
     return instance;
   }
 
-  RoomRepository(L repoLogger) : BaseRepository(repoLogger){};
+  RoomRepository(L repoLogger) : BaseRepository(repoLogger, "chat_room"){};
 
   R findById(mysqlx::Session &session, uint64_t id) override {
     return findBy(session, fmt::v9::format("room_id={}", id));
