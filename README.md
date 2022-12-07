@@ -1,5 +1,8 @@
 # Super Awesome Security
 
+## Demo App
+The app isn't connected to server, just for demo. You can login with *user* mode via id=user@naver.com & pw=1234. You can send messages in chat rooms
+
 **We provide back-end server, not front. So you should use api testing tools like postman**
 
 ## Image
